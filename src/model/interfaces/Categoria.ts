@@ -1,4 +1,5 @@
 interface Categoria{
+	IdTipo: string
 	desc: string
 }
 

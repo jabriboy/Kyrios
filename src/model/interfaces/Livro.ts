@@ -1,4 +1,5 @@
 interface Livro{
+	IdUser: string
 	desc: string
 }
 

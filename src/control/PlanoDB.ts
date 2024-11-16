@@ -4,14 +4,25 @@ import Plano from "../model/interfaces/Plano"
 
 const PlanoDB = () => {
 	
-	const getPlano = async () => {
+	const getPlano = async (): Promise<{ id: string; p: Plano }[]> => {
 		try{
 			const querySnapshot = await getDocs(collection(db, "Plano"))
-			return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) || []
+			const allPlanos = querySnapshot.docs.map(doc => ({
+				id: doc.id,
+				p: {
+					desc: doc.data().desc || "",
+					value: doc.data().value || 0,
+					expireDate: doc.data().expireDate || ""
+				}
+			}));
+
+			return allPlanos || []
 
 		} catch(e){
 			console.log("Control Error: ", e)
 		}
+
+		return [{id: "", p: {desc: "", value: 0, expireDate: ""}}]
 	}
 
 	const getPlanoId = async (desc: string) => {

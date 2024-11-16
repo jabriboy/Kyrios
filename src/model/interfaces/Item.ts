@@ -1,12 +1,12 @@
 interface Item{
+	IdLivro: string,
 	IdCategoria: string,
-	IdTipo: string,
 	IdBanco: string,
 	desc: string,
 	value: number,
-	day: number,
-	month: number,
-	year: number 
+	day: string,
+	month: string,
+	year: string 
 }
 
 export default Item

@@ -1,11 +1,13 @@
 import './App.css'
-import Index from './view/test'
+import Index from './view/inputTest'
+import ReadOnly from './view/readOnly/ReadOnly'
 
 function App() {
 
   return (
     <>
       <Index/>
+      <ReadOnly/>
     </>
   )
 }

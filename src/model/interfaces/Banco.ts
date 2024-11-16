@@ -1,6 +1,7 @@
 interface Banco{
+	IdUser: string,
 	type: string,
-	numConta: number,
+	numConta: string,
 	nameBanco: string
 }
 

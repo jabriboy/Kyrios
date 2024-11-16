@@ -1,5 +1,6 @@
 interface User {
 	IdPlano: string,
+	username: string,
 	email: string,
 	password: string
 }
