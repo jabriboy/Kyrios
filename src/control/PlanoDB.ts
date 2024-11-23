@@ -10,9 +10,11 @@ const PlanoDB = () => {
 			const allPlanos = querySnapshot.docs.map(doc => ({
 				id: doc.id,
 				p: {
-					desc: doc.data().desc || "",
-					value: doc.data().value || 0,
-					expireDate: doc.data().expireDate || ""
+					link: doc.data().link || "",
+					priceId: doc.data().priceId || "",
+					price: doc.data().price || 0,
+					duration: doc.data().duration || "",
+					desc: doc.data().link || "",
 				}
 			}));
 
@@ -22,7 +24,7 @@ const PlanoDB = () => {
 			console.log("Control Error: ", e)
 		}
 
-		return [{id: "", p: {desc: "", value: 0, expireDate: ""}}]
+		return [{id: "", p: {link: "", priceId: "", price: 0, duration: "", desc: ""}}]
 	}
 
 	const getPlanoId = async (desc: string) => {

@@ -1,8 +1,10 @@
 interface User {
+	UserID: string,
+	StripeUserID: string,
 	IdPlano: string,
 	username: string,
 	email: string,
-	password: string
+	status: string
 }
 
 export default User
