@@ -1,0 +1,35 @@
+.loading-spinner {
+	margin: 0 auto;
+	border: 8px solid var(--off-white); /* Cor de fundo do círculo */
+	border-top: 8px solid var(--light-blue); /* Cor da borda animada */
+	border-radius: 50%; /* Tornar o elemento redondo */
+	width: 100px; /* Largura do círculo */
+	height: 100px; /* Altura do círculo */
+	animation: spin 1s linear infinite; /* Animação */
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.loading{
+	background: var(--dark-blue);
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.box{
+		h1{
+			color: var(--off-white);
+			font-size: 3rem;
+		}
+
+	}
+}
+  

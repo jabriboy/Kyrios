@@ -1,0 +1,28 @@
+.main{
+	display: flex;
+	.right-box{
+		width: 100%;
+		background: var(--off-white);
+
+		.render-components{
+			display: flex;
+			height: 80vh;
+			justify-content: center;
+			align-items: center;
+
+			.btn-add{
+				cursor: pointer;
+				position: fixed;
+				top: 80%;
+				left: 93%;
+				border-radius: 1.57rem;
+				width: 3.5rem;
+				transition: .3s;
+			}
+			.btn-add:hover{
+				box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+				transition: .3s;
+			}
+		}
+	}
+}

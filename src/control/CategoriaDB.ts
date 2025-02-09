@@ -1,4 +1,4 @@
-import { collection, getDocs, addDoc, query, where } from 'firebase/firestore';
+import { collection, getDocs, addDoc, query, where, doc, getDoc } from 'firebase/firestore';
 import { db } from '../model/firebaseConfig';
 import Categoria from "../model/interfaces/Categoria"
 
@@ -22,6 +22,18 @@ const CategoriaDB = () => {
 		}
 
 		return [{id: "", c: {IdTipo: "", desc: ""}}]
+	}
+
+	const getCategoriaById = async (id: string): Promise<{c: Categoria}> => {
+		try{
+			const querySnapshot = await getDoc(doc(db, "Categoria", id))
+
+			return { c: {IdTipo: querySnapshot.data()?.IdTipo, desc: querySnapshot.data()?.desc} }
+		} catch(e){
+			console.log("Control Error: ", e)
+		}
+
+		return {c: {IdTipo: "", desc: ""}}
 	}
 
 	const getCategoriaId = async (desc: string) => {
@@ -68,7 +80,8 @@ const CategoriaDB = () => {
 		getCategoriaId,
 		addCategoria,
 		updateCategoria,
-		removeCategoria
+		removeCategoria,
+		getCategoriaById
 	}
 
 }

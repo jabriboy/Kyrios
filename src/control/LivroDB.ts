@@ -1,17 +1,18 @@
-import { collection, getDocs, addDoc, query, where } from 'firebase/firestore';
+import { collection, getDocs, addDoc, query, where, getDoc, doc } from 'firebase/firestore';
 import { db } from '../model/firebaseConfig';
 import Livro from "../model/interfaces/Livro"
 import UserDB from './UserDB';
 
 const LivroDB = () => {
 	
-	const getLivro = async (): Promise<{ id: string; l: Livro }[]> => {
+	const getLivro = async (empresaId: string): Promise<{ id: string; l: Livro }[]> => {
 		try{
-			const querySnapshot = await getDocs(collection(db, "Livro"))
+			const q = query(collection(db, "Livro"), where("IdEmpresa", "==", `${empresaId}`))
+			const querySnapshot = await getDocs(q)
 			const allLivro = querySnapshot.docs.map(doc => ({
 				id: doc.id,
 				l: {
-					IdUser: doc.data().IdUser || "",
+					IdEmpresa: doc.data().IdEmpresa || "",
 					desc: doc.data().desc || ""
 				}
 			}));
@@ -22,13 +23,23 @@ const LivroDB = () => {
 			console.log("Control Error: ", e)
 		}
 
-		return [{id: "", l: {IdUser: "", desc: ""}}]
+		return [{id: "", l: {IdEmpresa: "", desc: ""}}]
 	}
 
-	const getLivroId = async (username: string, desc: string) => {
+	const getLivroById = async (id: string) => {
+		try{
+			const querySnapshot = await getDoc(doc(db, "Livro", id))
+			console.log(querySnapshot.data())
+			return querySnapshot.data()
+		} catch(e){
+			console.log("Control Error: ", e)
+		}
+	}
+
+	const getLivroId = async (email: string, desc: string) => {
 		const { getUserId } = UserDB()
 		try{
-			const q = query(collection(db, "Livro"), where("IdUser", "==", `${await getUserId(username)}`), where("desc", "==", `${desc}`))
+			const q = query(collection(db, "Livro"), where("IdUser", "==", `${await getUserId(email)}`), where("desc", "==", `${desc}`))
 
 			const querySnapshot = await getDocs(q)
 			const id = querySnapshot.docs.map(doc => ({ id: doc.id }))
@@ -48,29 +59,12 @@ const LivroDB = () => {
 		}
 	}
 
-	const updateLivro = async (livro: Livro) => {
-		try{
-			console.log(livro)
-		} catch(e){
-			console.log("Control Error: ", e)
-		}
-	}
-
-	const removeLivro = async (livro: Livro) => {
-		try{
-			console.log(livro)
-		} catch(e){
-			console.log("Control Error: ", e)
-		}
-	}
-
 	
 	return{
 		getLivro,
 		getLivroId,
 		addLivro,
-		updateLivro,
-		removeLivro
+		getLivroById
 	}
 
 }

@@ -1,0 +1,75 @@
+.cadastro-arquivo{
+	background: var(--dark-blue);
+	padding: 6rem 4rem;
+	border-radius: 1.5rem;
+
+	h2{
+		background: var(--light-blue);
+		width: fit-content;
+		padding: .5rem 1.5rem;
+		border-radius: 2.5rem;
+		color: var(--off-black);
+		margin: 0 auto;
+		margin-top: -7rem;
+		margin-bottom: 2rem;
+	}
+
+	form{
+		width: fit-content;
+		margin-bottom: -4rem;
+
+		.drop-file{
+			border-style: dashed;
+			border-width: 1.5px;
+			border-color: var(--off-black);
+			border-radius: 1.5rem;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 2rem;
+			background: var(--light-blue);
+			cursor: pointer;
+			p{
+				margin: 0;
+			}
+		}
+
+		div{
+			margin-bottom: 1rem;
+			text-align: center;
+
+			select{
+				border-radius: .5rem;
+				padding: .2rem 1rem;
+			}
+
+			p{
+				margin: 0;
+				margin-bottom: .5rem;
+				color: var(--off-white);
+				text-transform: uppercase;
+				font-weight: bold;	
+				font-size: .8rem;
+				transition: .2s;
+			}
+			.obs{
+				color: var(--off-black);
+				opacity: .7;
+				font-size: .7rem;
+				margin-top: .5rem;
+			}
+		}
+
+		button{
+			cursor: pointer;
+			margin-top: 2rem;
+			border: none;
+			width: 100%;
+			background: var(--primary-blue);
+			border-radius: 2.5rem;
+			padding: .5rem;
+			color: var(--off-white);
+			text-transform: capitalize;
+		}
+	}
+}

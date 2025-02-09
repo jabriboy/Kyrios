@@ -20,7 +20,7 @@ const sendEventToClients = (eventData) => {
 };
 
 // Rota para receber conexões SSE do frontend
-app.get('/events', (req, res) => {
+app.get('/stripeBackend/events', (req, res) => {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
@@ -38,7 +38,7 @@ app.get('/events', (req, res) => {
 });
 
 // Webhook da Stripe para receber eventos
-app.post('/webhook', express.raw({ type: 'application/json' }), (request, response) => {
+app.post('/stripeBackend/webhook', express.raw({ type: 'application/json' }), (request, response) => {
   let event = request.body;
 
   if (endpointSecret) {
@@ -86,6 +86,14 @@ app.post('/webhook', express.raw({ type: 'application/json' }), (request, respon
       });
       break;
 
+    case 'customer.subscription.updated':
+      const updated = event.data.object;
+      sendEventToClients({
+        eventType: event.type,
+        eventData: updated
+      });
+      break;
+
     default:
       console.log(`Evento não tratado: ${event.type}`);
       break;
@@ -97,6 +105,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }), (request, respon
 
 // Iniciar o servidor
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });

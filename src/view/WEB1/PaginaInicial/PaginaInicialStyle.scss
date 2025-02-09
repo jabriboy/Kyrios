@@ -1,0 +1,26 @@
+.pagina-inicial{
+	h2{
+		text-align: center;
+	}
+	
+	.div-table{
+		table{
+			border-style: solid;
+			border-color: black;
+			border-width: 1px;
+			border-spacing: 0;
+			thead{
+				background: lightgray;
+			}
+			td{
+				background: white;
+			}
+			td, th{
+				padding: .5rem;
+				border-style: solid;
+				border-color: black;
+				border-width: 1px;
+			}
+		}
+	}
+}

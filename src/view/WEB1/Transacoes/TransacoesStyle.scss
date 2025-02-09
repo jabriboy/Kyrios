@@ -1,0 +1,32 @@
+.transacoes{
+	margin-top: 8vh;
+	h2{
+		text-align: center;
+	}
+	.box-transacoes{
+		justify-content: space-between;
+		display: flex;
+	}
+	.div-table{
+		overflow-y: auto;
+		height: 60vh;
+		table{
+			border-style: solid;
+			border-color: black;
+			border-width: 1px;
+			border-spacing: 0;
+			thead{
+				background: lightgray;
+			}
+			td{
+				background: white;
+			}
+			td, th{
+				padding: .5rem;
+				border-style: solid;
+				border-color: black;
+				border-width: 1px;
+			}
+		}
+	}
+}

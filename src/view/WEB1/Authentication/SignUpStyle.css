@@ -1,0 +1,49 @@
+.cadastre-se-background {
+  background: var(--dark-blue);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cadastre-se-background .cadastre-se {
+  background: var(--off-white);
+  border-radius: 0.5rem;
+  padding: 4rem;
+  width: 20%;
+}
+.cadastre-se-background .cadastre-se h1 {
+  color: var(--primary-blue);
+  text-transform: capitalize;
+  margin-top: -2rem;
+  margin-left: -2rem;
+  margin-bottom: 2rem;
+}
+.cadastre-se-background .cadastre-se form {
+  margin: 0 auto;
+  width: 80%;
+}
+.cadastre-se-background .cadastre-se form p {
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  color: var(--off-black);
+}
+.cadastre-se-background .cadastre-se form input {
+  background: var(--light-blue);
+  border: none;
+  border-radius: 2.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem;
+}
+.cadastre-se-background .cadastre-se form button {
+  cursor: pointer;
+  margin-top: 2rem;
+  border: none;
+  width: 100%;
+  background: var(--primary-blue);
+  border-radius: 2.5rem;
+  padding: 0.5rem;
+  color: var(--off-white);
+  text-transform: capitalize;
+}/*# sourceMappingURL=SignUpStyle.css.map */

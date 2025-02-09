@@ -62,9 +62,9 @@ const AuthDB = () => {
 				UserID: result.user.uid,
 				StripeUserID: "",
 				IdPlano: String(await getPlanoId("free")),
-				username: "",
+				username: String(result.user.displayName),
 				email: String(result.user.email),
-				status: ""
+				status: "active"
 			})
 	
 		} catch (error: unknown) {

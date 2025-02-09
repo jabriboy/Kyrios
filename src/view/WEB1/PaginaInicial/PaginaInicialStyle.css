@@ -1,0 +1,21 @@
+.pagina-inicial h2 {
+  text-align: center;
+}
+.pagina-inicial .div-table table {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  border-spacing: 0;
+}
+.pagina-inicial .div-table table thead {
+  background: lightgray;
+}
+.pagina-inicial .div-table table td {
+  background: white;
+}
+.pagina-inicial .div-table table td, .pagina-inicial .div-table table th {
+  padding: 0.5rem;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}/*# sourceMappingURL=PaginaInicialStyle.css.map */

@@ -1,0 +1,55 @@
+.cadastre-se-background{
+	background: var(--dark-blue);
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.cadastre-se{
+		background: var(--off-white);
+		border-radius: .5rem;
+		padding: 4rem;
+		width: 20%;
+
+		h1{
+			color: var(--primary-blue);
+			text-transform: capitalize;
+			margin-top: -2rem;
+			margin-left: -2rem;
+			margin-bottom: 2rem;
+		}
+
+		form{
+			margin: 0 auto;
+			width: 80%;
+			p{
+				text-transform: uppercase;
+				margin-bottom: .5rem;
+				font-weight: 400;
+				color: var(--off-black);
+			}
+
+			input{
+				background: var(--light-blue);
+				border: none;
+				border-radius: 2.5rem;
+				box-sizing: border-box;
+				width: 100%;
+				padding: .5rem;
+			}
+
+			button{
+				cursor: pointer;
+				margin-top: 2rem;
+				border: none;
+				width: 100%;
+				background: var(--primary-blue);
+				border-radius: 2.5rem;
+				padding: .5rem;
+				color: var(--off-white);
+				text-transform: capitalize;
+			}
+
+		}
+	}
+}

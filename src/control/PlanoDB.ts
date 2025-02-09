@@ -1,4 +1,4 @@
-import { collection, getDocs, addDoc, query, where } from 'firebase/firestore';
+import { collection, getDocs, addDoc, query, where, doc, getDoc } from 'firebase/firestore';
 import { db } from '../model/firebaseConfig';
 import Plano from "../model/interfaces/Plano"
 
@@ -40,6 +40,46 @@ const PlanoDB = () => {
 			console.log("Control Error: ", e)
 		}
 	}
+
+	const getPlanoByPlanoId = async (planoId: string) => {
+		try{
+			const docRef = doc(db, "Plano", planoId);
+			const docSnap = await getDoc(docRef);
+
+			if (docSnap.exists()) {
+				return docSnap.data(); // Retorna os dados do documento
+			} else {
+				console.log("Nenhum documento encontrado com o ID fornecido.");
+				return null;
+			}
+		} catch(e){
+			console.log("Control Error: ", e)
+		}
+	}
+
+	const getPlanoByPriceId = async (priceId: string): Promise<(Plano | null)> => {
+		try{
+			const docSnap = await getDocs(query(collection(db, "Plano"), where("priceId", "==", `${priceId}`)));
+			if (docSnap.docs.length > 0) {
+				const plano = docSnap.docs.map(doc => ({
+					link: doc.data().link || "",
+					priceId: doc.data().priceId || "",
+					price: doc.data().price || 0,
+					duration: doc.data().duration || "",
+					desc: doc.data().desc || "",
+					
+				}))
+				return plano[0]; // Retorna os dados do documento
+			} else {
+				console.log("Nenhum documento encontrado com o ID fornecido.");
+				return null;
+			}
+		} catch(e){
+			console.log("Control Error: ", e)
+		}
+
+		return null
+	}
 	
 	const addPlano = async (plano: Plano) => {
 		try{
@@ -73,7 +113,9 @@ const PlanoDB = () => {
 		getPlanoId,
 		addPlano,
 		updatePlano,
-		removePlano
+		removePlano,
+		getPlanoByPlanoId,
+		getPlanoByPriceId
 	}
 
 }

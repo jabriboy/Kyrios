@@ -1,0 +1,32 @@
+.transacoes {
+  margin-top: 8vh;
+}
+.transacoes h2 {
+  text-align: center;
+}
+.transacoes .box-transacoes {
+  justify-content: space-between;
+  display: flex;
+}
+.transacoes .div-table {
+  overflow-y: auto;
+  height: 60vh;
+}
+.transacoes .div-table table {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  border-spacing: 0;
+}
+.transacoes .div-table table thead {
+  background: lightgray;
+}
+.transacoes .div-table table td {
+  background: white;
+}
+.transacoes .div-table table td, .transacoes .div-table table th {
+  padding: 0.5rem;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}/*# sourceMappingURL=TransacoesStyle.css.map */

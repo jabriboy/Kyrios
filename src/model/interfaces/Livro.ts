@@ -1,5 +1,5 @@
 interface Livro{
-	IdUser: string
+	IdEmpresa: string
 	desc: string
 }
 

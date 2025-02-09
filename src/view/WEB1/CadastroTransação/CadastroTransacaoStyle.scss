@@ -1,0 +1,71 @@
+.cadastroTransacao{
+	background-color: var(--dark-blue);
+	width: fit-content;
+	padding: 4rem;
+	border-radius: 1.5rem;
+	
+	h2{
+		background: var(--light-blue);
+		width: fit-content;
+		padding: .5rem 1.5rem;
+		border-radius: 2.5rem;
+		color: var(--off-black);
+		margin-top: -5rem;
+		margin-bottom: 2rem;
+	}
+	
+	form{
+		margin: 0 auto;
+		width: 100%;
+		margin-bottom: -2rem;
+		div{
+			display: flex;
+			justify-content: right;
+			gap: .5rem;
+			align-items: center;
+			margin-bottom: .5rem;
+		}
+		p{
+			color: var(--light-blue);
+			text-transform: uppercase;
+			margin: 0;
+			font-weight: bold;
+			text-align: right;
+			font-size: .8rem;
+			transition: .2s;
+		}
+
+		.inputTipo{
+			justify-content: space-around;
+		}
+		.add-categoria{
+			background: none;
+			margin: 0;
+			width: fit-content;
+		}
+		
+		input, select{
+			border: none;
+			border-radius: 2.5rem;
+			box-sizing: border-box;
+			width: 65%;
+			// padding: .5rem;
+			padding: 0 .5rem;
+			height: 1.5rem;
+			font-size: .8rem;
+		}
+
+		button{
+			cursor: pointer;
+			margin-top: 2rem;
+			border: none;
+			width: 100%;
+			background: var(--primary-blue);
+			border-radius: 2.5rem;
+			padding: .5rem;
+			color: var(--off-white);
+			text-transform: capitalize;
+		}
+
+	}
+}

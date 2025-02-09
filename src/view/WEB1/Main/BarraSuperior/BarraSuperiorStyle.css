@@ -1,0 +1,55 @@
+.barra-superior {
+  background: var(--dark-blue);
+  height: 20vh;
+  display: flex;
+  justify-content: space-between;
+}
+.barra-superior .left {
+  margin-left: 2rem;
+  margin-top: 4rem;
+  color: white;
+}
+.barra-superior .left h2 {
+  margin: 0;
+  text-transform: capitalize;
+  font-weight: 400;
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+.barra-superior .left h2 img {
+  width: 1.5rem;
+  transition: 0.2s;
+  cursor: pointer;
+}
+.barra-superior .left p {
+  margin: 0;
+  margin-top: 0.2rem;
+  font-size: 1.2rem;
+  font-weight: lighter;
+}
+.barra-superior .right ul {
+  display: flex;
+  padding: 0;
+  margin-top: 4rem;
+  margin-right: 2rem;
+  list-style-type: none;
+  gap: 1rem;
+}
+.barra-superior .right ul a {
+  text-decoration: none;
+}
+.barra-superior .right ul li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--off-white);
+  background: var(--light-blue);
+  border-radius: 0.5rem;
+  height: 2.5rem;
+  width: 2.5rem;
+}
+.barra-superior .right ul li img {
+  width: 1.5rem;
+  height: 1.5rem;
+}/*# sourceMappingURL=BarraSuperiorStyle.css.map */

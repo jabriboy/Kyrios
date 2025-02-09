@@ -1,0 +1,48 @@
+.cadastro-banco {
+  background-color: var(--dark-blue);
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 4rem;
+  border-radius: 1.5rem;
+}
+.cadastro-banco h2 {
+  background: var(--light-blue);
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0.5rem 1.5rem;
+  border-radius: 2.5rem;
+  color: var(--off-black);
+  margin-top: -5rem;
+  margin-bottom: 2rem;
+}
+.cadastro-banco form {
+  margin: 0 auto;
+  width: 100%;
+}
+.cadastro-banco form p {
+  color: var(--light-blue);
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: 0.2s;
+}
+.cadastro-banco form input, .cadastro-banco form select {
+  background: var(--light-blue);
+  border: none;
+  border-radius: 2.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem;
+}
+.cadastro-banco form button {
+  cursor: pointer;
+  margin-top: 2rem;
+  border: none;
+  width: 100%;
+  background: var(--primary-blue);
+  border-radius: 2.5rem;
+  padding: 0.5rem;
+  color: var(--off-white);
+  text-transform: capitalize;
+}/*# sourceMappingURL=CadastroBancoStyle.css.map */

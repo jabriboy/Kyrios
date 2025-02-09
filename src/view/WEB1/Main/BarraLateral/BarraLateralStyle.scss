@@ -1,0 +1,64 @@
+.barra-lateral{
+	background: var(--primary-blue);
+	width: 30%;
+	height: 100vh;
+	
+	.logo{
+		margin: 2rem;
+		margin-bottom: 4rem;
+		width: 14rem;
+	}
+	
+	ul{
+		list-style-type: none;
+		padding: 0;
+		margin: 2rem;
+		
+		li{
+			display: flex;
+			align-items: center;
+			gap: .5rem;
+			
+			img{
+				width: 1rem;
+				height: 1rem;
+			}
+			
+			cursor: pointer;
+			color: var(--off-white);
+			padding: .5rem 0;
+			font-weight: 400;
+			font-size: 1.2rem;
+			transition: .2s;
+			opacity: .6;
+		}
+		
+		li:hover{
+			font-weight: bold;
+			transition: .2s;
+		}
+	}
+	
+	.btn-premium{
+		cursor: pointer;
+		text-align: center;
+		background: linear-gradient(to right, yellow, gold);
+		width: fit-content;
+		padding: 1.5rem;
+		border-radius: 1rem;
+		font-weight: bold;
+		font-size: 1.4rem;
+		margin: 0 auto;
+		margin-top: 8rem;
+		text-transform: uppercase;
+		box-shadow: -4px 4px 10px rgb(0, 0, 0);
+		transition: .5s;
+	}
+	
+	.btn-premium:hover{
+		box-shadow: 4px 4px 10px rgba(255, 255, 255, 0.557);
+		transform: scale(1.01, 1.01);
+		transition: .5s;
+	}
+	
+}

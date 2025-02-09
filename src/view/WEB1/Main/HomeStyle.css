@@ -1,0 +1,26 @@
+.main {
+  display: flex;
+}
+.main .right-box {
+  width: 100%;
+  background: var(--off-white);
+}
+.main .right-box .render-components {
+  display: flex;
+  height: 80vh;
+  justify-content: center;
+  align-items: center;
+}
+.main .right-box .render-components .btn-add {
+  cursor: pointer;
+  position: fixed;
+  top: 80%;
+  left: 93%;
+  border-radius: 1.57rem;
+  width: 3.5rem;
+  transition: 0.3s;
+}
+.main .right-box .render-components .btn-add:hover {
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+  transition: 0.3s;
+}/*# sourceMappingURL=HomeStyle.css.map */

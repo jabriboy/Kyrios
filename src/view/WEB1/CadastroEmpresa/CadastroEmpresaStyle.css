@@ -1,0 +1,70 @@
+.cadastro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: var(--dark-blue);
+}
+.cadastro .left-cadastro {
+  background: var(--off-white);
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  width: 25%;
+}
+.cadastro .left-cadastro .box-cadastro h1 {
+  color: var(--primary-blue);
+  margin-top: -5rem;
+  margin-left: -3rem;
+  margin-bottom: 4rem;
+}
+.cadastro .left-cadastro .box-cadastro form {
+  margin: 0 auto;
+  width: 100%;
+}
+.cadastro .left-cadastro .box-cadastro form p {
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  color: var(--off-black);
+}
+.cadastro .left-cadastro .box-cadastro form input {
+  background: var(--light-blue);
+  border: none;
+  border-radius: 2.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem;
+}
+.cadastro .left-cadastro .box-cadastro form button {
+  cursor: pointer;
+  margin-top: 2rem;
+  border: none;
+  width: 100%;
+  background: var(--primary-blue);
+  border-radius: 2.5rem;
+  padding: 0.5rem;
+  color: var(--off-white);
+  text-transform: capitalize;
+}
+.cadastro .right-cadastro {
+  background: var(--primary-blue);
+  height: 60vh;
+  padding: 4rem;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  width: 25%;
+  color: var(--off-white);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cadastro .right-cadastro .box-right-cadastro h1 {
+  margin-bottom: 4rem;
+  margin-top: -2rem;
+}/*# sourceMappingURL=CadastroEmpresaStyle.css.map */

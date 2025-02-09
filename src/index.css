@@ -1,0 +1,22 @@
+:root{
+	--primary-blue: #2541b2;
+	--dark-blue: #233477;
+	--light-blue: #8796d4;
+	--cinza: #707078;
+	--off-white: #fdead9;
+	--off-black: #1f1f1f;
+
+	--title: 3rem;
+	--sub-title: 2rem;
+	--text: 1.2rem
+}
+
+@font-face {
+	font-family: 'LeagueSpartan';
+	src: url('./src/assets/fonts/League_Spartan/LeagueSpartan-VariableFont_wght.ttf') format('truetype');
+}
+
+body{
+	margin: 0;
+	font-family: 'LeagueSpartan'
+}

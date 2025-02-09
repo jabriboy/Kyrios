@@ -1,11 +1,14 @@
 import { useEffect } from 'react';
 import './App.css'
-// import Index from './view/inputTest'
-import Login from './view/login/Login'
+import Home from './view/WEB1/Main/Home';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from './view/WEB1/Authentication/Login';
+import NotFound from './view/WEB1/NotFound/NotFound';
+import SignUp from './view/WEB1/Authentication/SignUp';
+import CadastroEmpresa from './view/WEB1/CadastroEmpresa/CadastroEmpresa';
+import Planos from './view/WEB1/Planos/Planos';
+
 import StripeBackEnd from './control/Stripe';
-import Pricing from './view/stripePayment/Pricing';
-// import Register from './view/login/Register'
-// import ReadOnly from './view/readOnly/ReadOnly'
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -18,25 +21,24 @@ declare global {
 
 function App() {
   useEffect(() => {
-    // Cria a conexão com o backend para escutar os eventos via SSE
-    StripeBackEnd()
+    // LEMBRAR DE REMOVER O COMENTÁRIO 
+    StripeBackEnd() 
 
-    // Cleanup: fechar a conexão quando o componente for desmontado
   }, []);
 
   return (
     <>
-      {/* <Index/>
-      <ReadOnly/> */}
-      <Login/>
-      {/* <Register/> */}
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/cadastroEmpresa" element={<CadastroEmpresa />} />
+          <Route path="/planos" element={<Planos />} />
 
-      <Pricing/>
-      
-      {/* <stripe-pricing-table pricing-table-id="prctbl_1QNKD1KGFMYvItWTlRjIY8Sp"
-      publishable-key="pk_test_51QMz5bKGFMYvItWTmZVZmvAuamI1DHtQ82UJ7XGVcmGi0MHdRvCjgO18Omf5CUrbxBICjHGw13TcJKN8GzvqxikW002bs1msL8">
-      </stripe-pricing-table> */}
-
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
     </>
   )
 }

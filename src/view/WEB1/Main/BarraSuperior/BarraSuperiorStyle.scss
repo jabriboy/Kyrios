@@ -1,0 +1,59 @@
+.barra-superior{
+	background: var(--dark-blue);
+	height: 20vh;
+	display: flex;
+	justify-content: space-between;
+	
+	.left{
+		margin-left: 2rem;
+		margin-top: 4rem;
+		color: white;
+		h2{
+			margin: 0;
+			text-transform: capitalize;
+			font-weight: 400;
+			display: flex;
+			gap: .8rem;
+			align-items: center;
+			img{
+				width: 1.5rem;
+				transition: .2s;
+				cursor: pointer;
+			}
+		}
+		p{
+			margin: 0;
+			margin-top: .2rem;
+			font-size: 1.2rem;
+			font-weight: lighter;
+		}
+	}
+
+	.right{
+		ul{
+			display: flex;
+			padding: 0;
+			margin-top: 4rem;
+			margin-right: 2rem;
+			list-style-type: none;
+			gap: 1rem;
+			a{
+				text-decoration: none;
+			}
+			li{
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				img{
+					width: 1.5rem;
+					height: 1.5rem;
+				}
+				color: var(--off-white);
+				background: var(--light-blue);
+				border-radius: .5rem;
+				height: 2.5rem;
+				width: 2.5rem;
+			}
+		}
+	}
+}

@@ -1,4 +1,4 @@
-import { collection, getDocs, addDoc, query, where } from 'firebase/firestore';
+import { collection, getDocs, addDoc, query, where, getDoc, doc } from 'firebase/firestore';
 import { db } from '../model/firebaseConfig';
 import Tipo from "../model/interfaces/Tipo"
 
@@ -21,6 +21,19 @@ const TipoDB = () => {
 		}
 
 		return [{id: "", t: {desc: ""}}]
+	}
+
+	const getTipoById = async (id: string): Promise<{t: Tipo}> => {
+		try{
+
+			const querySnapshot = await getDoc(doc(db, "Tipo", id))
+
+			return { t: {desc: querySnapshot.data()?.desc} }
+		} catch(e){
+			console.log("Control Error: ", e)
+		}
+
+		return {t: {desc: ""}}
 	}
 
 	const getTipoId = async (desc: string) => {
@@ -67,7 +80,8 @@ const TipoDB = () => {
 		getTipoId,
 		addTipo,
 		updateTipo,
-		removeTipo
+		removeTipo,
+		getTipoById
 	}
 
 }

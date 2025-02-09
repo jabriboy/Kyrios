@@ -1,0 +1,33 @@
+.planos{
+	.header{
+		background: var(--dark-blue);
+		padding: 1rem 4rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		height: 1.5rem;
+		img{
+			height: 1rem;
+		}
+		p{
+			background: var(--light-blue);
+			color: var(--off-black);
+			padding: .2rem .5rem;
+			border-radius: .5rem;
+			font-size: 1.4rem;
+			cursor: pointer;
+			transition: .3s;
+		}
+		p:hover{
+			box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+			transition: .3s;
+		}
+	}
+
+	h1{
+		text-align: center;
+		color: var(--off-black);
+		margin-top: 2.5rem;
+		margin-bottom: .5rem;
+	}
+}

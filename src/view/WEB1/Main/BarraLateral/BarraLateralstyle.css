@@ -1,0 +1,56 @@
+.barra-lateral {
+  background: var(--primary-blue);
+  width: 30%;
+  height: 100vh;
+}
+.barra-lateral .logo {
+  margin: 2rem;
+  margin-bottom: 4rem;
+  width: 14rem;
+}
+.barra-lateral ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 2rem;
+}
+.barra-lateral ul li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: var(--off-white);
+  padding: 0.5rem 0;
+  font-weight: 400;
+  font-size: 1.2rem;
+  transition: 0.2s;
+  opacity: 0.6;
+}
+.barra-lateral ul li img {
+  width: 1rem;
+  height: 1rem;
+}
+.barra-lateral ul li:hover {
+  font-weight: bold;
+  transition: 0.2s;
+}
+.barra-lateral .btn-premium {
+  cursor: pointer;
+  text-align: center;
+  background: linear-gradient(to right, yellow, gold);
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  font-weight: bold;
+  font-size: 1.4rem;
+  margin: 0 auto;
+  margin-top: 8rem;
+  text-transform: uppercase;
+  box-shadow: -4px 4px 10px rgb(0, 0, 0);
+  transition: 0.5s;
+}
+.barra-lateral .btn-premium:hover {
+  box-shadow: 4px 4px 10px rgba(255, 255, 255, 0.557);
+  transform: scale(1.01, 1.01);
+  transition: 0.5s;
+}/*# sourceMappingURL=BarraLateralStyle.css.map */

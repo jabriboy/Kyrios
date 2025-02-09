@@ -3,7 +3,7 @@ import UserDB from "./UserDB";
 
 // Criando uma conexão SSE com o servidor
 const StripeBackEnd = () => {
-	const eventSource = new EventSource('http://localhost:3000/events');
+	const eventSource = new EventSource('http://sejakyrios.com.br:3000/stripeBackend/events');
 	
 	// Escutando os eventos enviados pelo backend
 	eventSource.onmessage = async function(event) {
@@ -11,36 +11,33 @@ const StripeBackEnd = () => {
 
 		const { changeStatus, addCusID, changePriceId } = UserDB()
 		
-		console.log('Evento recebido:', eventData.eventType);
+		// console.log('Evento recebido:', eventData.eventType);
 		
 		// Aqui você pode manipular os dados como quiser
 		// Exemplo: Exibir no frontend
 		if (eventData.eventType === 'payment_intent.succeeded') {
-			// const data = eventData.eventData
-			// console.log(Pagamento bem-sucedido: ${JSON.stringify(data)});
+			const data = eventData.eventData
+			// console.log(`Pagamento bem-sucedido: ${JSON.stringify(data)}`);
 
 			const userid = auth.currentUser?.uid
-			// console.log(userid)
-			// buscar user com esse id
+			
 			await changeStatus(String(userid), "active")
+			// console.log("Customer: ", data.customer)
+			await addCusID(String(userid), data.customer)
 
 		} else if (eventData.eventType === 'payment_method.attached') {
-			const data = eventData.eventData
+			// const data = eventData.eventData
 			// console.log(Método de pagamento anexado: ${JSON.stringify(data)});
 
 			const userid = auth.currentUser?.uid
-			console.log("Customer: ", data.customer)
-			const custumerId = data.customer
-
-			await addCusID(String(userid), custumerId)
+			console.log("uid: ", userid)
 
 		} else if (eventData.eventType === 'customer.subscription.deleted') {
 			// const data = eventData.eventData
 			// console.log(Assinatura cancelada: ${JSON.stringify(data)});
 			const userid = auth.currentUser?.uid
-
+			
 			await changeStatus(String(userid), "deactive")
-
 
 		} else if(eventData.eventType === 'invoice.payment_succeeded') {
 			const data = eventData.eventData
@@ -48,8 +45,17 @@ const StripeBackEnd = () => {
 			const priceId = data.lines.data[0].plan.id
 
 			const userid = auth.currentUser?.uid
-
+			// console.log("priceId: ", priceId)
 			await changePriceId(String(userid), priceId)
+
+		} else if(eventData.eventType === 'customer.subscription.updated') {
+			const data = eventData.eventData
+			// console.log(`Subscription Updated: ${JSON.stringify(data)}`);
+			const newPriceId = data.items.data[0].plan.id
+
+			const userid = auth.currentUser?.uid
+			console.log("priceId: ", newPriceId)
+			await changePriceId(String(userid), newPriceId)
 
 		}
 	};

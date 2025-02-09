@@ -1,0 +1,63 @@
+.componente-empresa {
+  background: var(--light-blue);
+  width: -moz-max-content;
+  width: max-content;
+  padding: 0 0.5rem 0.5rem 0.5rem;
+  margin-left: 2rem;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+}
+.componente-empresa .add-Empresa form {
+  margin: 0 auto;
+  width: 100%;
+}
+.componente-empresa .add-Empresa form p {
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  color: var(--off-black);
+}
+.componente-empresa .add-Empresa form input {
+  background: var(--off-white);
+  border: none;
+  border-radius: 2.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem;
+}
+.componente-empresa .add-Empresa form button {
+  cursor: pointer;
+  margin-top: 0.5rem;
+  border: none;
+  width: 100%;
+  background: var(--primary-blue);
+  border-radius: 2.5rem;
+  padding: 0.5rem;
+  color: var(--off-white);
+  text-transform: capitalize;
+}
+.componente-empresa .empresas-box {
+  display: flex;
+  justify-content: space-between;
+}
+.componente-empresa .empresas-box select {
+  color: var(--dark-blue);
+  background: none;
+  border: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: -0.5rem;
+}
+.componente-empresa .empresas-box button {
+  margin-bottom: -0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 2rem;
+  color: var(--dark-blue);
+  transition: 0.2s;
+}
+.componente-empresa .empresas-box button:hover {
+  color: var(--off-white);
+  transition: 0.2s;
+}/*# sourceMappingURL=ComponenteEmpresaStyle.css.map */
