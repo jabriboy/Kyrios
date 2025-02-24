@@ -17,7 +17,7 @@ import EmpresaDB from "../../../control/EmpresaDB";
 import CadastroLivro from "../CadastroLivro/CadastroLivro";
 import CadastroBanco from "../CadastroBanco/CadastroBanco";
 
-export default function CadastroTransacao(props: {currentUser: User | null, empresaId: string, planoDesc: string | null, loading: Dispatch<SetStateAction<string>>}) {
+export default function CadastroTransacao(props: {currentUser: User | null, empresaId: string, planoDesc: string | null, loading: Dispatch<SetStateAction<string>>, setCurrentComponent: (value: string) => void, handleClick: (value: string) => void}) {
 	interface CadastroTransacao {livro: string, categoria: string, desc: string, tipo: string, valor: number, data: string, banco: string}
 
 	const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm<CadastroTransacao>();
@@ -74,7 +74,6 @@ export default function CadastroTransacao(props: {currentUser: User | null, empr
 		
 		setLoading(false)
 		 
-		
 		reset()
 	};
 	
@@ -83,10 +82,11 @@ export default function CadastroTransacao(props: {currentUser: User | null, empr
 			const categoria = await getCategoria()
 			setCategoria(categoria ?? [])
 			
-			const banco = await getBanco(String(props.currentUser?.uid))
+			const banco = await getBanco(String(props.currentUser?.uid), String(props.empresaId))
 			setBanco(banco ?? [])
 			
 			const livro = await getLivro(String(props.empresaId))
+			// console.log(livro)
 			setLivro(livro ?? [])
 			
 			const entrada = await getTipoId("entrada")
@@ -102,17 +102,17 @@ export default function CadastroTransacao(props: {currentUser: User | null, empr
 		
 		getData()
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [props.currentUser?.uid, getBanco, getCategoria, getTipoId, props.empresaId, getLivro])
+	}, [props.currentUser?.uid, getBanco, getCategoria, getTipoId, props.empresaId, getLivro, props])
 
 	if (loading) {
 		props.loading('none')
 		return <Loading2/>
 	}
-	if (livro?.length == 0) {return <CadastroLivro currentUser={props.currentUser} planoDesc={props.planoDesc}/>}
-	if (banco?.length == 0) {return <CadastroBanco currentUser={props.currentUser} planoDesc={props.planoDesc}/>}
+	if (livro?.length == 0) {return <CadastroLivro setCurrentComponent={props.setCurrentComponent} handleClick={props.handleClick} empresaId={props.empresaId} currentUser={props.currentUser} planoDesc={props.planoDesc}/>}
+	if (banco?.length == 0) {return <CadastroBanco setCurrentComponent={props.setCurrentComponent} handleClick={props.handleClick} loading={props.loading} currentUser={props.currentUser} planoDesc={props.planoDesc} empresa={props.empresaId}/>}
 	return(
 		<>
+			{/* {console.log("aqui")} */}
 			<div className="cadastroTransacao">
 				<h2>Cadastro Transação</h2>
 				<form onSubmit={handleSubmit(onSubmit)}>
@@ -153,22 +153,22 @@ export default function CadastroTransacao(props: {currentUser: User | null, empr
 						<select 
 							id="categoria"
 							{...register("categoria", { required: true })}
-							>
-						{categoria?.map((c) => {
-							// console.log(tipo)
-							if(c.c.IdTipo == tipo){
-								return (
-									<option key={c.id} value={c.id}>{c.c.desc}</option>
-								)
-							}
-							if(tipo == null){
-								if(c.c.IdTipo == saida){
+						>
+							{categoria?.map((c) => {
+								// console.log(tipo)
+								if(c.c.IdTipo == tipo){
 									return (
 										<option key={c.id} value={c.id}>{c.c.desc}</option>
 									)
 								}
-							}
-						})}
+								if(tipo == null){
+									if(c.c.IdTipo == saida){
+										return (
+											<option key={c.id} value={c.id}>{c.c.desc}</option>
+										)
+									}
+								}
+							})}
 						</select>
 
 						

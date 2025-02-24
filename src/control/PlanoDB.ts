@@ -14,7 +14,7 @@ const PlanoDB = () => {
 					priceId: doc.data().priceId || "",
 					price: doc.data().price || 0,
 					duration: doc.data().duration || "",
-					desc: doc.data().link || "",
+					desc: doc.data().desc || "",
 				}
 			}));
 

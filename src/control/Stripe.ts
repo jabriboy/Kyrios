@@ -41,21 +41,23 @@ const StripeBackEnd = () => {
 
 		} else if(eventData.eventType === 'invoice.payment_succeeded') {
 			const data = eventData.eventData
-			// console.log(Subscription Created: ${JSON.stringify(data)});
-			const priceId = data.lines.data[0].plan.id
-
+			// console.log(`Subscription Created: ${JSON.stringify(data)}`);
+			let priceId = ""
+			if(data.lines.data.length == 1) priceId = data.lines.data[0].plan.id;
+			else priceId = data.lines.data[1].plan.id;
+			
 			const userid = auth.currentUser?.uid
 			// console.log("priceId: ", priceId)
 			await changePriceId(String(userid), priceId)
 
 		} else if(eventData.eventType === 'customer.subscription.updated') {
-			const data = eventData.eventData
-			// console.log(`Subscription Updated: ${JSON.stringify(data)}`);
-			const newPriceId = data.items.data[0].plan.id
+			// const data = eventData.eventData
+			// // console.log(`Subscription Updated: ${JSON.stringify(data)}`);
+			// const newPriceId = data.items.data[0].plan.id
+			// console.log("priceId: ", newPriceId)
 
-			const userid = auth.currentUser?.uid
-			console.log("priceId: ", newPriceId)
-			await changePriceId(String(userid), newPriceId)
+			// const userid = auth.currentUser?.uid
+			// await changePriceId(String(userid), newPriceId)
 
 		}
 	};

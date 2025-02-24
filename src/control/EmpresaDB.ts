@@ -31,6 +31,27 @@ const EmpresaDB = () => {
 
 		return [{id: "", e: {IdUser: "", desc: "", area: "", saldo: 0}}]
 	}
+	const getEmpresaById = async (id: string) => {
+		try{
+			const emp = await getDoc(doc(db, "Empresa", id)) 
+			let empresa: Empresa = {IdUser: "", desc: "", area: "", saldo: 0}
+			if(emp.exists()){
+				empresa = {
+					IdUser: emp.data().IdUser,
+					area: emp.data().area,
+					desc: emp.data().desc,
+					saldo: emp.data().saldo
+				}
+			}
+
+			return empresa || []
+
+		} catch(e){
+			console.log("Control Error: ", e)
+		}
+
+		return {IdUser: "", desc: "", area: "", saldo: 0}
+	}
 
 	const getEmpresaId = async (email: string, desc: string) => {
 		const { getUserId } = UserDB()
@@ -117,6 +138,7 @@ const EmpresaDB = () => {
 	
 	return{
 		getEmpresa,
+		getEmpresaById,
 		getEmpresaId,
 		addEmpresa,
 		updateCalcSaldo,

@@ -1,0 +1,58 @@
+.go-to-pro{
+	background: var(--dark-blue);
+	color: white;
+	text-align: center;
+	padding: 5rem 7rem;
+	width: 25rem;
+	border-radius: 2.5rem;
+	h1{
+		margin: 0;
+	}
+	.props{
+		color: var(--off-black);
+		// color: red;
+		font-weight: bold;
+		margin-top: 0;
+	}
+	.logo{
+		margin-top: .5rem;
+		img{
+			height: 2rem;
+		}
+		font-size: 3rem;
+
+	}
+	h3{
+		font-weight: normal;
+	}
+	.btn{
+		gap: 1rem;
+		display: flex;
+		justify-content: center;
+		button{
+			cursor: pointer;
+			border: none;
+			height: 4.5rem;
+			width: 10rem;
+			font-size: 1rem;
+			border-radius: 1rem;
+		}
+		.continue-limitado{
+			background: var(--light-blue);
+		}
+		.seja-pro{
+			background: linear-gradient(to right, rgb(254, 192, 43), #F9521A);
+			box-shadow: -4px 4px 10px rgb(0, 0, 0);
+			font-weight: bold;
+			font-size: 1.5rem;
+			text-transform: uppercase;
+			transition: .5s;
+		}
+
+		.seja-pro:hover{
+			box-shadow: 4px 4px 10px rgba(255, 255, 255, 0.557);
+			transform: scale(1.05, 1.05);
+			transition: .5s;
+		}
+	}
+}

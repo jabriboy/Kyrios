@@ -1,0 +1,69 @@
+@charset "UTF-8";
+.ajuda {
+  background: var(--off-white);
+  height: 100vh;
+}
+.ajuda h1 {
+  text-align: center;
+  margin: 4rem 0;
+}
+.ajuda header {
+  background: var(--dark-blue);
+  height: 15vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.ajuda header img {
+  cursor: pointer;
+}
+.ajuda header button {
+  position: absolute;
+  right: 6rem;
+  border: none;
+  background: var(--light-blue);
+  width: 6rem;
+  height: 2rem;
+  border-radius: 1rem;
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.ajuda header button:hover {
+  transform: scale(1.05, 1.05);
+  transition: 0.3s;
+}
+.ajuda .box-ajuda {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5rem;
+  margin: 0 15rem;
+}
+.ajuda .box-ajuda .left {
+  width: 50%;
+}
+.ajuda .box-ajuda .left ul {
+  padding: 0;
+  list-style-type: none;
+}
+.ajuda .box-ajuda .left ul li {
+  margin: 1rem 0;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 1.2rem;
+}
+.ajuda .box-ajuda .left ul li::marker {
+  content: "▼ "; /* Define o símbolo desejado */
+  color: black; /* Ajuste a cor conforme necessário */
+  font-size: 16px; /* Ajuste o tamanho conforme necessário */
+}
+.ajuda .box-ajuda .left ul li:hover {
+  transform: scale(1.02, 1.02);
+  transition: 0.3s;
+}
+.ajuda .box-ajuda .right {
+  width: 50%;
+}/*# sourceMappingURL=AjudaStyle.css.map */

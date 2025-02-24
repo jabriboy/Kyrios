@@ -36,7 +36,7 @@
 .barra-lateral .btn-premium {
   cursor: pointer;
   text-align: center;
-  background: linear-gradient(to right, yellow, gold);
+  background: linear-gradient(to right, rgb(254, 192, 43), #F9521A);
   width: -moz-fit-content;
   width: fit-content;
   padding: 1.5rem;
@@ -51,6 +51,6 @@
 }
 .barra-lateral .btn-premium:hover {
   box-shadow: 4px 4px 10px rgba(255, 255, 255, 0.557);
-  transform: scale(1.01, 1.01);
+  transform: scale(1.05, 1.05);
   transition: 0.5s;
 }/*# sourceMappingURL=BarraLateralStyle.css.map */

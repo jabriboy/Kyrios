@@ -4,27 +4,30 @@ import Banco from "../model/interfaces/Banco"
 
 const BancoDB = () => {
 	
-	const getBanco = async (IdUser: string): Promise<{ id: string; b: Banco }[]> => {
+	const getBanco = async (IdUser: string, empresaId: string): Promise<{ id: string; b: Banco }[]> => {
 		try{
-			const q = query(collection(db, "Banco"), where("IdUser", "==", `${IdUser}`))
+			// console.log(IdUser)
+			// console.log(empresaId)
+			const q = query(collection(db, "Banco"), where("IdUser", "==", `${IdUser}`), where("IdEmpresa", "==", `${empresaId}`))
 			const querySnapshot = await getDocs(q)
 			const allBanco = querySnapshot.docs.map(doc => ({
 				id: doc.id,
 				b: {
 					IdUser: doc.data().IdUser || "",
+					IdEmpresa: doc.data().IdEmpresa || "",
 					type: doc.data().type || "",
 					numConta: doc.data().numConta || "",
 					nameBanco: doc.data().nameBanco || ""
 				}
 			}));
-
+			// console.log(allBanco)
 			return allBanco || []
 
 		} catch(e){
 			console.log("Control Error: ", e)
 		}
 
-		return [{id: "", b: {IdUser: "", type: "", numConta: "", nameBanco: ""}}]
+		return [{id: "", b: {IdUser: "", IdEmpresa: "", type: "", numConta: "", nameBanco: ""}}]
 		
 	}
 

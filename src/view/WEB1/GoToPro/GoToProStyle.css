@@ -1,0 +1,55 @@
+.go-to-pro {
+  background: var(--dark-blue);
+  color: white;
+  text-align: center;
+  padding: 5rem 7rem;
+  width: 25rem;
+  border-radius: 2.5rem;
+}
+.go-to-pro h1 {
+  margin: 0;
+}
+.go-to-pro .props {
+  color: var(--off-black);
+  font-weight: bold;
+  margin-top: 0;
+}
+.go-to-pro .logo {
+  margin-top: 0.5rem;
+  font-size: 3rem;
+}
+.go-to-pro .logo img {
+  height: 2rem;
+}
+.go-to-pro h3 {
+  font-weight: normal;
+}
+.go-to-pro .btn {
+  gap: 1rem;
+  display: flex;
+  justify-content: center;
+}
+.go-to-pro .btn button {
+  cursor: pointer;
+  border: none;
+  height: 4.5rem;
+  width: 10rem;
+  font-size: 1rem;
+  border-radius: 1rem;
+}
+.go-to-pro .btn .continue-limitado {
+  background: var(--light-blue);
+}
+.go-to-pro .btn .seja-pro {
+  background: linear-gradient(to right, rgb(254, 192, 43), #F9521A);
+  box-shadow: -4px 4px 10px rgb(0, 0, 0);
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  transition: 0.5s;
+}
+.go-to-pro .btn .seja-pro:hover {
+  box-shadow: 4px 4px 10px rgba(255, 255, 255, 0.557);
+  transform: scale(1.05, 1.05);
+  transition: 0.5s;
+}/*# sourceMappingURL=GoToProStyle.css.map */

@@ -1,25 +1,54 @@
 .planos{
-	.header{
+	background: var(--off-white);
+	height: 100vh;
+	
+
+	header{
 		background: var(--dark-blue);
-		padding: 1rem 4rem;
+		height: 18vh;
 		display: flex;
-		justify-content: space-between;
 		align-items: center;
-		height: 1.5rem;
-		img{
-			height: 1rem;
+		justify-content: center;
+		position: relative;
+
+		.img{
+			p{
+				font-size: 1.3rem;
+				margin: 0;
+				color: var(--light-blue);
+			}
+			.logo{
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				img{
+					cursor: pointer;
+				}
+				p{
+					margin: 0;
+					margin-top: .5rem;
+					font-size: 3.5rem;
+					color: white;
+				}
+			}
 		}
-		p{
+
+		button{
+			position: absolute;
+			right: 6rem;
+			border: none;
 			background: var(--light-blue);
-			color: var(--off-black);
-			padding: .2rem .5rem;
-			border-radius: .5rem;
-			font-size: 1.4rem;
+			width: 6rem;
+			height: 2rem;
+			border-radius: 1rem;
+			color: white;
+			text-transform: uppercase;
 			cursor: pointer;
 			transition: .3s;
 		}
-		p:hover{
-			box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+
+		button:hover{
+			transform: scale(1.05, 1.05);
 			transition: .3s;
 		}
 	}
@@ -27,7 +56,108 @@
 	h1{
 		text-align: center;
 		color: var(--off-black);
-		margin-top: 2.5rem;
+		margin-top: 1rem;
 		margin-bottom: .5rem;
+	}
+
+	.switch-duration{
+		list-style-type: none;
+		display: flex;
+		justify-self: center;
+		align-items: center;
+		padding: 0;
+		background: grey;
+		padding: .5rem .5rem;
+		border-radius: 1.5rem;
+		color: white;
+		gap: .5rem;
+		li{
+			padding: .5rem 1.5rem;
+			border-radius: 1rem;
+			width: 5rem;
+			text-align: center;
+			transition: .3s;
+			text-transform: capitalize;
+		}
+		li:hover{
+			cursor: pointer;
+			background: lightgray;
+			transition: .1s;
+		}
+	}
+	.plan{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 5rem;
+		margin: 0 10rem;
+		// text-align: center;
+		ul{
+			position: absolute;
+			top: 6.5rem;
+			padding: 0;
+			margin: 0 1rem;
+			margin-top: .5rem;
+			margin-right: 3rem;
+			text-align: justify;
+			li{
+				margin: 0 0 1.5rem 0;
+				span{
+					font-weight: bold;
+					text-transform: uppercase;
+					color: var(--primary-blue);
+				}
+			}
+		}
+		.pro{
+			background: white;
+			width: 16rem;
+			height: 19rem;
+			padding: 2rem;
+			border-radius: 2.5rem;
+			position: relative;
+			h2{
+				text-align: left;
+				width: fit-content;
+				margin: 0 auto;
+				font-size: 2.5rem;
+				color: var(--primary-blue);
+			}
+			.price{
+				position: absolute;
+				font-weight: bold;
+				font-size: 1.4rem;
+				bottom: 4rem;
+			}
+			.diamond{
+				color: var(--off-black);
+				font-size: 2rem;
+				text-transform: uppercase;
+				margin: 0;
+				margin-left: 1rem;
+			}
+			.btn-subscribe{
+				position: absolute;
+				bottom: 2rem;
+				left: 50%;
+    			transform: translateX(-50%);
+				display: block;
+				text-decoration: none;
+				color: var(--off-black);
+				background: linear-gradient(to right, rgb(254, 192, 43), #F9521A);
+				padding: .5rem 2.5rem;
+				border-radius: .5rem;
+				margin: 0 auto;
+				text-align: center;
+				width: max-content;
+				box-shadow: -4px 4px 10px rgb(0, 0, 0);
+				transition: .5s;
+			}
+			.btn-subscribe:hover{
+				box-shadow: 4px 4px 10px rgb(0, 0, 0);
+				transform: translateX(-50%) scale(1.1, 1.1);
+				transition: .5s;
+			}
+		}
 	}
 }

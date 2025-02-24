@@ -4,9 +4,10 @@ import CadastroArquivo from "../CadastroArquivo/CadastroArquivo"
 import { User } from "firebase/auth"
 import './CadastroStyle.css'
 
-export default function Cadastro(props: {currentUser: User | null, empresaId: string, planoDesc: string | null}){
+export default function Cadastro(props: {currentUser: User | null, empresaId: string, planoDesc: string | null, setCurrentComponent: (value: string) => void, handleClick: (value: string) => void}){
 	const [compEscolhido, setCompEscolhido] = useState<string | null>('transação')
 	const [loading, setLoading] = useState('none')
+	const [pro, setPro] = useState(true)
 
 	const styleSelected = {
 		backgroundColor: '#2541b2',
@@ -17,8 +18,8 @@ export default function Cadastro(props: {currentUser: User | null, empresaId: st
 	return(
 		<>
 			{compEscolhido === 'transação' || compEscolhido === null 
-			? <CadastroTransacao currentUser={props.currentUser} empresaId={props.empresaId} planoDesc={props.planoDesc} loading={setLoading}/> 
-			: <CadastroArquivo currentUser={props.currentUser} empresaId={props.empresaId} planoDesc={props.planoDesc} loading={setLoading}/>}
+			? <CadastroTransacao setCurrentComponent={(value: string) => {props.setCurrentComponent(value)}} handleClick={(value: string) => {props.setCurrentComponent(value)}} currentUser={props.currentUser} empresaId={props.empresaId} planoDesc={props.planoDesc} loading={setLoading}/> 
+			: <CadastroArquivo pro={pro} handleClick={(value: string) => {props.setCurrentComponent(value)}} currentUser={props.currentUser} empresaId={props.empresaId} planoDesc={props.planoDesc} loading={setLoading} setCurrentComponent={(value: string) => {props.setCurrentComponent(value)}}/>}
 
 			<div className="switch" style={{display: loading}}>
 				<div className="top" onClick={() => {
@@ -29,7 +30,16 @@ export default function Cadastro(props: {currentUser: User | null, empresaId: st
 				<div className="barra-top" style={compEscolhido == 'transação' ? styleSelected : {}}></div>
 
 				<div className="bottom" onClick={() => {
-					setCompEscolhido('arquivo')
+					// console.log(props.planoDesc)
+					if(props.planoDesc?.includes("diamond")){
+						console.log(props.planoDesc)
+						setCompEscolhido('arquivo')
+						setPro(false)
+					} else{
+						setCompEscolhido('arquivo')
+						// console.log(pro)
+						setPro(true)
+					}
 				}} style={compEscolhido == 'arquivo' ? styleSelected : {}}>
 					Upload de Arquivo
 				</div>

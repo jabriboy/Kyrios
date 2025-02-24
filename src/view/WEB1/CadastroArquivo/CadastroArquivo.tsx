@@ -11,8 +11,9 @@ import LivroDB from "../../../control/LivroDB";
 import Livro from "../../../model/interfaces/Livro";
 import CadastroLivro from "../CadastroLivro/CadastroLivro";
 import CadastroBanco from "../CadastroBanco/CadastroBanco";
+import GoToPro from "../GoToPro/GoToPro";
 
-export default function CadastroArquivo(props: {currentUser: User | null, empresaId: string, planoDesc: string | null, loading: Dispatch<SetStateAction<string>>}) {
+export default function CadastroArquivo(props: {currentUser: User | null, empresaId: string, planoDesc: string | null, loading: Dispatch<SetStateAction<string>>, pro: boolean, setCurrentComponent: (value: string) => void, handleClick: (value: string) => void}) {
 	interface CadastroArquivo {livro: string, file: File, banco: string}
 	interface OFX {OFX: {BANKMSGSRSV1: {STMTTRNRS: {STMTRS: {BANKTRANLIST: {STMTTRN: [{MEMO: string, CHECKNUM: string,DTPOSTED: string, FITID: string, REFNUM: string, TRNAMT: string, TRNTYPE: string,}]}}}}}}
 
@@ -68,13 +69,13 @@ export default function CadastroArquivo(props: {currentUser: User | null, empres
 	
 	useEffect(() => {
 		const getData = async () => {
-			const banco = await getBanco(String(props.currentUser?.uid))
+			const banco = await getBanco(String(props.currentUser?.uid), String(props.empresaId))
+			// console.log(banco)
 			setBanco(banco ?? [])
 			
 			const livro = await getLivro(String(props.empresaId))
 			setLivro(livro ?? [])
 			
-			console.log("use effect acionou")
 			setLoading(false)
 			
 			props.loading('block')
@@ -89,8 +90,15 @@ export default function CadastroArquivo(props: {currentUser: User | null, empres
 		props.loading('none')
 		return <Loading2/>
 	}
-	if (livro?.length == 0) {return <CadastroLivro currentUser={props.currentUser} planoDesc={props.planoDesc}/>}
-	if (banco?.length == 0) {return <CadastroBanco currentUser={props.currentUser} planoDesc={props.planoDesc}/>}
+	if (livro?.length == 0) {return <CadastroLivro setCurrentComponent={(value: string) => {props.setCurrentComponent(value)}} handleClick={(value: string) => {props.setCurrentComponent(value)}} empresaId={props.empresaId} currentUser={props.currentUser} planoDesc={props.planoDesc}/>}
+	if (banco?.length == 0) {return <CadastroBanco setCurrentComponent={(value: string) => {props.setCurrentComponent(value)}} handleClick={(value: string) => {props.setCurrentComponent(value)}} loading={props.loading} currentUser={props.currentUser} planoDesc={props.planoDesc} empresa={props.empresaId}/>}
+	if(props.pro){
+		if(props?.loading) props.loading("none");
+		if(!props.planoDesc?.includes("diamond")){
+			// console.log(props.planoDesc)
+			return <GoToPro desc={""} handleClick={(value: string) => {props.setCurrentComponent(value)}}/>
+		}
+	}
 	return(
 		<>	
 			<div className="cadastro-arquivo">
@@ -118,7 +126,7 @@ export default function CadastroArquivo(props: {currentUser: User | null, empres
 						<select
 							id="banco"
 							onChange={(value) => {
-								console.log(value.target.value)
+								// console.log(value.target.value)
 								setValue('banco',  String(value.target.value))
 							}}
 							

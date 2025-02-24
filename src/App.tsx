@@ -9,6 +9,8 @@ import CadastroEmpresa from './view/WEB1/CadastroEmpresa/CadastroEmpresa';
 import Planos from './view/WEB1/Planos/Planos';
 
 import StripeBackEnd from './control/Stripe';
+import Configuracoes from './view/WEB1/Configuracoes/Configuracoes';
+import Ajuda from './view/WEB1/Ajuda/Ajuda';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -35,6 +37,8 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/cadastroEmpresa" element={<CadastroEmpresa />} />
           <Route path="/planos" element={<Planos />} />
+          <Route path="/configurações" element={<Configuracoes />} />
+          <Route path="/ajuda" element={<Ajuda />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

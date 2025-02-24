@@ -29,4 +29,74 @@
   border-style: solid;
   border-color: black;
   border-width: 1px;
+}
+.transacoes .div-table table .row:hover td {
+  background: lightgrey;
+  cursor: pointer;
+}
+
+.background {
+  background: rgba(0, 0, 0, 0.505);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.background .modal-transacao {
+  background: white;
+  width: 40%;
+  padding: 1.5rem 2rem;
+  border-radius: 1rem;
+}
+.background .modal-transacao span {
+  cursor: pointer;
+  display: block;
+  text-align: right;
+  margin-bottom: -2rem;
+  margin-right: -1.5rem;
+  margin-top: -1rem;
+}
+.background .modal-transacao span:hover {
+  color: red;
+}
+.background .modal-transacao h1 {
+  text-align: center;
+}
+.background .modal-transacao .info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.5rem;
+}
+.background .modal-transacao .info p, .background .modal-transacao .info h3 {
+  margin: 0;
+  text-transform: capitalize;
+}
+.background .modal-transacao .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.background .modal-transacao .btn .btn-edit, .background .modal-transacao .btn .btn-del {
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  text-transform: capitalize;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+.background .modal-transacao .btn .btn-edit:hover, .background .modal-transacao .btn .btn-del:hover {
+  opacity: 1;
+  transition: 0.3s;
+}
+.background .modal-transacao .btn .btn-edit {
+  background-color: var(--primary-blue);
+}
+.background .modal-transacao .btn .btn-del {
+  background-color: red;
 }/*# sourceMappingURL=TransacoesStyle.css.map */

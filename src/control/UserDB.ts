@@ -29,6 +29,28 @@ const UserDB = () => {
 		return [{id: "", u: {UserID: "", StripeUserID: "", IdPlano: "", username: "", email: "", status: ""}}]
 	}
 
+	const getUserById = async (id: string) => {
+		try{
+
+			const user = await getDoc(doc(db, "User", id))
+			let u: User = {UserID: "", StripeUserID: "", IdPlano: "", username: "", email: "", status: ""}
+			if(user.exists()){
+				u = {
+					UserID: user.data().UserID || "",
+					StripeUserID: user.data().StripeUserID || "",
+					IdPlano: user.data().IdPlano || "",
+					username: user.data().username || "",
+					email: user.data().email || "",
+					status: user.data().status || "",
+				}
+			}
+
+			return u
+		} catch(e){
+			console.log("Control Error: ", e)
+		}
+	}
+
 	const getUserId = async (email: string) => {
 		try{
 			const q = query(collection(db, "User"), where("email", "==", `${email}`))
@@ -105,9 +127,16 @@ const UserDB = () => {
 		return {UserID: "", StripeUserID: "", IdPlano: "", username: "", email: "", status: ""}
 	}
 
-	const updateUser = async (user: User) => {
+	const updateUser = async (user: User, id: string) => {
 		try{
-			console.log(user)
+			await updateDoc(doc(db, "User", id), {
+				StripeUserID: user.StripeUserID,
+				IdPlano: user.IdPlano,
+				username: user.username,
+				email: user.email,
+				status: user.status,
+			})
+
 		} catch(e){
 			console.log("Control Error: ", e)
 		}
@@ -172,21 +201,24 @@ const UserDB = () => {
 
 
 	const changePriceId = async (id: string, priceid: string) => {
-		console.log("pticeId: ", priceid)
+		// console.log("priceId: ", priceid)
 		try{
 			const querySnapshot = await getDoc(doc(db, "User", id))
-
+			
 			const user = querySnapshot.data()
-
-			console.log(user)
-
-			await setDoc(doc(db, "User", id), {
+			
+			// console.log(user)
+			
+			await updateDoc(doc(db, "User", id), {
 				StripeUserID: user?.StripeUserID,
 				IdPlano: priceid,
 				username: user?.username,
 				email: user?.email,
 				status: user?.status,
 			})
+			
+			// const newUser = await getDoc(doc(db, "User", id))
+			// console.log(newUser.data())
 
 		} catch(e){
 			console.log("Control Error: ", e)
@@ -227,7 +259,8 @@ const UserDB = () => {
 		addCusID,
 		changePriceId,
 		getCusIDByUserID,
-		getPlanoByEmail
+		getPlanoByEmail,
+		getUserById
 	}
 
 }

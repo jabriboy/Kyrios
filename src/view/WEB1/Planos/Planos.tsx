@@ -1,92 +1,141 @@
-// import { useNavigate } from 'react-router-dom'
-// import logo from '../../../assets/kyrios type.png'
+import { useNavigate } from 'react-router-dom'
+import logo from '../../../assets/kyrios type.png'
 import './PlanosStyle.css'
 import { useEffect, useState } from 'react';
 import { auth } from '../../../model/firebaseConfig';
 import { User } from 'firebase/auth';
-
-export const plans = [
-	{
-		link: process.env.NODE_ENV === "development" ? "https://buy.stripe.com/test_bIY7uQfyndrm1G0288" : "",
-		piceId: process.env.NODE_ENV === "development" ? "price_1QbpXSGTtKzbYqtT8wMAdTl1" : "",
-		price: 99.99,
-		duration: "/month",
-	},
-];
+import Plano from '../../../model/interfaces/Plano';
+import PlanoDB from '../../../control/PlanoDB';
+import Loading from '../Loading/Loading';
 
 export default function Planos(){
-	// const navigate = useNavigate()
+	const { getPlano } = PlanoDB()
 
-	const [plan] = useState(plans[0]);
+	const navigate = useNavigate()
 
+	const [plans, setPlans] = useState<{id: string, p: Plano}[] | null>(null)
 	const [currentUser, setCurrentUser] = useState<User | null>(null);
 	const [loading, setLoading] = useState(true);
+	const [duration, setDuration] = useState("/mês");
+
+	const styleDurationSelected = {
+		background: "white",
+		color: "blue",
+		transition: '.3s'
+	}
 
 	useEffect(() => {
 		// Observar o estado de autenticação do usuário
-		const unsubscribe = auth.onAuthStateChanged((user) => {
+		const unsubscribe = auth.onAuthStateChanged(async (user) => {
 			setCurrentUser(user); // Atualiza o estado do usuário
 			setLoading(false); // Finaliza o estado de carregamento
+
+			setPlans(await getPlano())
+			// console.log(await getPlano())
 		});
 
 		// Cleanup do observer
 		return () => unsubscribe();
-	}, []);
+	}, [getPlano]);
 
 	// Renderiza um estado de carregamento enquanto o auth não é resolvido
 	if (loading) {
-		return <div className="loading">Loading...</div>;
+		return <Loading/>;
 	}
 	return (
 		<>
-			<div className="pricing">
+			<div className="planos">
+				<header>
+					<div className="img">
+						<p>Boas-Vindas ao</p>
+						<div className="logo">
+							<img src={logo} alt="logo kyrios" />
+							<p>.PRO</p>
+						</div>
+					</div>
+					<button onClick={() => {
+						navigate('/')
+					}}>voltar</button>
+				</header>
+			
+				<ul className='switch-duration'>
+					<li onClick={() => {
+						setDuration("/mês")
+					}} style={duration == "/mês" ? styleDurationSelected : {}}>mensal</li>
+					<li onClick={() => {
+						setDuration("/semestre")
+					}} style={duration == "/semestre" ? styleDurationSelected : {}}>semestral</li>
+					<li onClick={() => {
+						setDuration("/ano")
+					}} style={duration == "/ano" ? styleDurationSelected : {}}>anual</li>
+				</ul>
 				<div className="plan">
-					<h2>Plano Premium</h2>
-					<p>plano premium</p>
-					<p>
-						valor: {plan.price}
-						{plan.duration}
-					</p>
-					<a
-						href={
-							currentUser
-								? plan.link + "?prefilled_email=" + currentUser.email
-								: "#"
-						}
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Subscribe
-					</a>
+					<div className="pro">
+						<h2>KYRIOS.PRO</h2>
+						<ul className='benefícios'>
+							<li>com <span>kyrios.pro</span> você pode criar até 3 livros caixa</li>
+							<li><span>kyrios.pro</span> possui cadastro ilimitado de diferentes bancos</li>
+						</ul>
+						{plans?.map((p) => {
+							// console.log(p.p)
+							if(p.p.desc.includes('premium')){
+								if(p.p.duration == duration)
+								return(
+									<>
+										<p className='price'>
+											R${p.p.price}{p.p.duration}
+										</p>
+										<a  className='btn-subscribe'
+											href={
+												currentUser
+													? p.p.link + "?prefilled_email=" + currentUser.email
+													: "#"
+											}
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											Assinar Agora
+										</a>
+									</>
+								)
+							}
+						})}
+					</div>
+					<div className="pro">
+						<h2>KYRIOS.PRO</h2>
+						<p className='diamond'>Diamond</p>
+						<ul className='benefícios'>
+							<li>com o <span>diamond</span> você cria quantos livros caixa quiser</li>
+							<li>com o <span>diamond</span> você pode fazer o upload do seu extrato bancário</li>
+							<li>cadastre quantas empresas quiser com o  <span>diamond</span></li>
+						</ul>
+						{plans?.map((p) => {
+							// console.log(p.p)
+							if(p.p.desc.includes('diamond')){
+								if(p.p.duration == duration)
+									return(
+										<>
+											<p className='price'>
+												R${p.p.price}{p.p.duration}
+											</p>
+											<a  className='btn-subscribe'
+												href={
+													currentUser
+														? p.p.link + "?prefilled_email=" + currentUser.email
+														: "#"
+												}
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												Assinar Agora
+											</a>
+										</>
+									)
+							}
+						})}
+					</div>
 				</div>
-				
-				<a href={
-					currentUser ?
-					"http://billing.stripe.com/p/login/test_bIY9DO2PudvS79CfYY" + "?prefilled_email=" + currentUser.email : ""
-				} target="_blank"
-				rel="noopener noreferrer"> portal do cliente</a>
 			</div>
 		</>
-
-	// return(
-	// 	<>
-	// 		<div className="planos">
-	// 			<div className="header">
-	// 				<img src={logo} alt="logo kyrios" />
-	// 				<p onClick={() => {
-	// 					navigate('/')
-	// 				}}>voltar</p>
-	// 			</div>
-	// 			<h1>Planos Kyrios</h1>
-	// 			<div className="pricing-table">
-	// 				<stripe-pricing-table 
-	// 					pricing-table-id="prctbl_1QbprHGTtKzbYqtTdcHKxzgs"
-	// 					publishable-key="pk_test_51Qbo2qGTtKzbYqtTcxIwzb368ZLbGXxgzAEPtnj4rbBBwlWatjR7yF39QaK3DEF1hUUkkjCA0bIWRH5h2qbzLinu00CRI3JwkG"
-	// 					rel="noopener noreferrer"
-	// 				>
-	// 				</stripe-pricing-table>
-	// 			</div>
-	// 		</div>
-	// 	</>
 	)
 }

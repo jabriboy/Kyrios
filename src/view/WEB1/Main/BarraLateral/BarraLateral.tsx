@@ -1,7 +1,7 @@
 import { User } from "firebase/auth"
 import ComponenteEmpresa from "../ComponenteEmpresa/ComponenteEmpresa"
 import './BarraLateralStyle.css'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import home from '../../../../assets/house-window-1.png'
 import swap from '../../../../assets/swap.png'
 import add from '../../../../assets/add-1.png'
@@ -11,11 +11,11 @@ import book from '../../../../assets/revista-de-catalogo.png'
 import { useNavigate } from "react-router-dom"
 // import calendar from '../../../../assets/payroll-calendar-1.png'
 
-export default function BarraLateral(props: {currentUser: User | null, handleClick: (value: string) => void, planoDesc: string | null}) {
-	const [select, setSelect] = useState('página inicial')
+export default function BarraLateral(props: {currentUser: User | null, handleClick: (value: string) => void, planoDesc: string | null, setEmpresa: (value: string) => void, currentComponent: string}) {
+	const [select, setSelect] = useState(props.currentComponent)
 	
 	const navigate = useNavigate();
-
+	
 	const styleSelect = {
 		opacity: "1",
 		transition: ".2s",
@@ -27,12 +27,16 @@ export default function BarraLateral(props: {currentUser: User | null, handleCli
 		setSelect(value)
 	}
 
+	useEffect(() => {
+		setSelect(props.currentComponent)
+	}, [props.currentComponent])
+
 	return(
 		<>
 			<div className="barra-lateral">
 				<img src={logo} alt="logo kyrios" className="logo"/>
 
-				<ComponenteEmpresa currentUser={props.currentUser} planoDesc={props.planoDesc}/>
+				<ComponenteEmpresa currentUser={props.currentUser} planoDesc={props.planoDesc} setEmpresa={(value: string) => {props.setEmpresa(value)}}/>
 
 				<ul>
 					<li style={select == "página inicial" ? styleSelect : {}} onClick={() => {handleSelect("página inicial")}}><img src={home} alt="Home" /> Página Inicial </li>
@@ -44,9 +48,12 @@ export default function BarraLateral(props: {currentUser: User | null, handleCli
 				</ul>
 
 				<div className="btn-premium" onClick={() => {
+					{console.log(props?.planoDesc)}
 					navigate('/planos')
+				}} style={{
+					display: props.planoDesc != null ? (props.planoDesc?.includes("premium") || props.planoDesc?.includes("diamond") ? "none" : "block") : "block"
 				}}>
-					seja premium
+					seja pro
 				</div>
 			</div>
 		</>

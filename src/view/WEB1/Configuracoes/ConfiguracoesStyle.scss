@@ -1,0 +1,76 @@
+.config{
+	background: var(--off-white);
+	height: 100vh;
+	// padding: 0 6rem;
+	h1{
+		text-align: center;
+		margin: 2rem 0;
+	}
+	header{
+		background: var(--dark-blue);
+		height: 15vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+
+		img{
+			cursor: pointer;
+		}
+
+		button{
+			position: absolute;
+			right: 6rem;
+			border: none;
+			background: var(--light-blue);
+			width: 6rem;
+			height: 2rem;
+			border-radius: 1rem;
+			color: white;
+			text-transform: uppercase;
+			cursor: pointer;
+			transition: .3s;
+		}
+
+		button:hover{
+			transform: scale(1.05, 1.05);
+			transition: .3s;
+		}
+
+	}
+	.box{
+		display: flex;
+		justify-content: center;
+		gap: 10rem;
+		margin: 0 10rem;
+		.perfil{
+			width: 50%;
+			.config-input-box{
+				margin-bottom: 1rem;
+				
+				input{
+					width: 100%;
+				}
+			}
+		}
+		.configuracoes{
+			width: 50%;
+			.portal-do-cliente{
+				.portal-cliente{
+					display: block;
+					width: fit-content;
+					background-color: var(--dark-blue);
+					padding: .2rem 1rem;
+					color: var(--off-white);
+					text-decoration: none;
+					border-radius: .5rem;
+					transition: transform 0.5s ease;
+				}
+				.portal-cliente:hover{
+					transition: .5s;
+					transform: scale(1.05, 1.05);
+				}
+			}
+		}
+	}
+}

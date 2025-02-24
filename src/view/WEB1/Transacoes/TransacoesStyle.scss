@@ -27,6 +27,78 @@
 				border-color: black;
 				border-width: 1px;
 			}
+			.row:hover{
+				td{
+					background: lightgrey;
+					cursor: pointer;
+				}
+			}
+		}
+	}
+}
+.background{
+	background: rgba(0, 0, 0, 0.505);
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.modal-transacao{
+		background: white;
+		width: 40%;
+		padding: 1.5rem 2rem;
+		border-radius: 1rem;
+		span{
+			cursor: pointer;
+			display: block;
+			text-align: right;
+			margin-bottom: -2rem;
+			margin-right: -1.5rem;
+			margin-top: -1rem;
+		}
+		span:hover{
+			color: red;
+		}
+		h1{
+			text-align: center;
+		}
+		.info{
+			display: flex;
+			align-items: center;
+			gap: .5rem;
+			p, h3{
+				margin: 0;
+				text-transform: capitalize;
+			}
+			margin: .5rem;
+		}
+		.btn{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 1rem;
+			margin-top: 2rem;
+			.btn-edit, .btn-del{
+				border: none;
+				color: white;
+				padding: .5rem 1rem;
+				border-radius: .5rem;
+				text-transform: capitalize;
+				cursor: pointer;
+				opacity: .6;
+				transition: .3s;
+			}
+			.btn-edit:hover, .btn-del:hover{
+				opacity: 1;
+				transition: .3s;
+			}
+			.btn-edit{
+				background-color: var(--primary-blue);
+			}
+			.btn-del{
+				background-color: red;
+			}
 		}
 	}
 }

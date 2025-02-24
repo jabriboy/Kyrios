@@ -1,0 +1,69 @@
+.config {
+  background: var(--off-white);
+  height: 100vh;
+}
+.config h1 {
+  text-align: center;
+  margin: 2rem 0;
+}
+.config header {
+  background: var(--dark-blue);
+  height: 15vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.config header img {
+  cursor: pointer;
+}
+.config header button {
+  position: absolute;
+  right: 6rem;
+  border: none;
+  background: var(--light-blue);
+  width: 6rem;
+  height: 2rem;
+  border-radius: 1rem;
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.config header button:hover {
+  transform: scale(1.05, 1.05);
+  transition: 0.3s;
+}
+.config .box {
+  display: flex;
+  justify-content: center;
+  gap: 10rem;
+  margin: 0 10rem;
+}
+.config .box .perfil {
+  width: 50%;
+}
+.config .box .perfil .config-input-box {
+  margin-bottom: 1rem;
+}
+.config .box .perfil .config-input-box input {
+  width: 100%;
+}
+.config .box .configuracoes {
+  width: 50%;
+}
+.config .box .configuracoes .portal-do-cliente .portal-cliente {
+  display: block;
+  width: -moz-fit-content;
+  width: fit-content;
+  background-color: var(--dark-blue);
+  padding: 0.2rem 1rem;
+  color: var(--off-white);
+  text-decoration: none;
+  border-radius: 0.5rem;
+  transition: transform 0.5s ease;
+}
+.config .box .configuracoes .portal-do-cliente .portal-cliente:hover {
+  transition: 0.5s;
+  transform: scale(1.05, 1.05);
+}/*# sourceMappingURL=ConfiguracoesStyle.css.map */

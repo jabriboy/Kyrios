@@ -1,4 +1,4 @@
-import { collection, getDocs, addDoc, query, where, orderBy } from 'firebase/firestore';
+import { collection, getDocs, addDoc, query, where, orderBy, doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../model/firebaseConfig';
 import Item from "../model/interfaces/Item"
 import CategoriaDB from './CategoriaDB';
@@ -93,7 +93,8 @@ const ItemDB = () => {
 	  
 		try {
 			const livroItems = await getItemByLivro(livroId)
-		
+			// if(livroItems.length == 0) return 0
+
 			const newLivroItems = await Promise.all(
 				livroItems.map(async (i) => {
 					const cat = await getCategoriaById(i.i.IdCategoria);
@@ -244,17 +245,28 @@ const ItemDB = () => {
 		}
 	}
 
-	const updateItem = async (item: Item) => {
+	const updateItem = async (id: string, item: Item) => {
 		try{
-			console.log(item)
+			await updateDoc(doc(db, "Item", id), {
+				desc: item.desc,
+				day: item.day,
+				month: item.month,
+				year: item.year,
+				value: item.value,
+				IdBanco: item.IdBanco,
+				IdCategoria: item.IdCategoria,
+				IdLivro: item.IdLivro
+			})
+			
 		} catch(e){
 			console.log("Control Error: ", e)
 		}
 	}
 
-	const removeItem = async (item: Item) => {
+	const removeItem = async (id: string) => {
 		try{
-			console.log(item)
+			await deleteDoc(doc(db, "Item", id))
+
 		} catch(e){
 			console.log("Control Error: ", e)
 		}

@@ -1,26 +1,29 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import BancoDB from "../../../control/BancoDB";
 import Loading2 from "../Loading/Loading2";
 import { User } from "firebase/auth";
 import './CadastroBancoStyle.css'
-import Loading from "../Loading/Loading";
+import Banco from "../../../model/interfaces/Banco";
+import GoToPro from "../GoToPro/GoToPro";
 
-export default function CadastroBanco(props: {currentUser: User | null, planoDesc: string | null}){
+export default function CadastroBanco(props: {currentUser: User | null, planoDesc: string | null, empresa: string, loading: Dispatch<SetStateAction<string>> | null, setCurrentComponent: (value: string) => void, handleClick: (value: string) => void}){
 	interface cadBanco {nameBanco: string, numConta: string, type: string}
-
+	
 	const { register, handleSubmit, formState: { errors }, reset } = useForm<cadBanco>();
-	const { addBanco, getBancosValidos } = BancoDB()
+	const { addBanco, getBancosValidos, getBanco } = BancoDB()
 	const navigate = useNavigate()
 
 	const [loading, setLoading] = useState(true);
+	const [banc, setBanc] = useState<{ id: string; b: Banco; }[] | null>(null);
 	const [bancos, setBancos] = useState<{ id: string; b: { desc: string; }; }[] | undefined>(undefined)
 
 	const onSubmit = async (data: cadBanco) => {
 		setLoading(true)
 		await addBanco({
 			IdUser: String(props.currentUser?.uid),
+			IdEmpresa: props.empresa,
 			nameBanco: data.nameBanco,
 			numConta: data.numConta,
 			type: data.type
@@ -35,13 +38,25 @@ export default function CadastroBanco(props: {currentUser: User | null, planoDes
 		async function getData(){
 			const bank = await getBancosValidos()
 			setBancos(bank)
+
+			const bancos = await getBanco(String(props.currentUser?.uid), String(props.empresa))
+			setBanc(bancos)
 		}
+
 		getData()
 		setLoading(false)
-	}, [getBancosValidos])
+
+	}, [getBanco, getBancosValidos, props.currentUser, props.empresa])
 
 	if (loading) {return <Loading2/>}
-	if (!props.planoDesc?.includes("premium") && !props.planoDesc?.includes("diamond")) {return <Loading/>}
+	if ((!props.planoDesc?.includes("premium") && !props.planoDesc?.includes("diamond"))){
+		if((banc?.length ?? 0) > 0){
+			return <GoToPro handleClick={(value: string) => {props.setCurrentComponent(value)}} desc={"limite máximo de bancos cadastrados para o plano atual"}/>
+		}
+		else{
+			if(props.loading) props.loading("none")
+		}
+	}
 	return(
 		<>
 			<div className="cadastro-banco">
@@ -79,7 +94,7 @@ export default function CadastroBanco(props: {currentUser: User | null, planoDes
 						{...register("type", { required: true })}
 						>
 							<option value="conta corrente">Conta Corrente</option>
-							<option value="conta popança">Conta Corrente</option>
+							<option value="conta poupança">Conta Poupança</option>
 						</select>
 						{errors.type?.message && <p>{String(errors.type.message)}</p>}
 					</div>

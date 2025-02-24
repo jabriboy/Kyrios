@@ -26,7 +26,7 @@ export default function ReclameAquiComponent(props: {currentUser: User | null}){
 		<>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<div className="message">
-					<h3>Mensagem</h3>
+					<h3>Não encontrou sua dúvida ou está tendo algum problema? Fale Conosco!</h3>
 					<textarea
 						{...register("message", { required: true })}
 						id="message"

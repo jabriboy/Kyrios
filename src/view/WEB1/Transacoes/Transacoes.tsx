@@ -8,10 +8,21 @@ import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 import LivroDB from "../../../control/LivroDB"
 import Livro from "../../../model/interfaces/Livro"
+import Categoria from "../../../model/interfaces/Categoria"
+import CategoriaDB from "../../../control/CategoriaDB"
+import Switch from "react-switch";	
+import TipoDB from "../../../control/TipoDB"
+import Banco from "../../../model/interfaces/Banco"
+import BancoDB from "../../../control/BancoDB"
+import EmpresaDB from "../../../control/EmpresaDB"
 
 export default function Transacoes(props: {currentUser: User | null, empresaId: string}){
-	const { queryItemsByLivros } = ItemDB()
+	const { queryItemsByLivros, updateItem, removeItem } = ItemDB()
 	const { getLivro } = LivroDB()
+	const { getCategoria, getCategoriaById } = CategoriaDB()
+	const { getTipoId } = TipoDB()
+	const { getBanco } = BancoDB()
+	const { updateSaldo } = EmpresaDB()
 
 	const tableRef = useRef(null);
 
@@ -19,13 +30,22 @@ export default function Transacoes(props: {currentUser: User | null, empresaId: 
 	const [livros, setLivro] = useState<{ id: string; l: Livro; }[]>()
 	const [livroIdEscolhido, setLivroIdEscolhido] = useState<string>()
 	const [loading, setLoading] = useState(true)
+	const [openModal, setOpenModal] = useState(false)
+	const [dadosModal, setDadosModal] = useState<null | { tipoValor: string; nomeBanco: string; catName: string; id: string; i: Item; }>(null)
+	const [categoria, setCategoria] = useState<{id: string, c: Categoria}[]>()
+	const [tipo, setTipo] = useState<string | null>(null)
+	const [checked, setChecked] = useState(true);
+	const [entrada, setEntrada] = useState<string | null>(null)
+	const [saida, setSaida] = useState<string | null>(null)
+	const [banco, setBanco] = useState<{id: string, b: Banco}[]>()
+	const [IdCat, setIdCat] = useState(dadosModal?.i.IdCategoria)
 
 	const handleClick = async () => {
 		if (!tableRef.current) return;
-	  
+		
 		const workbook = new ExcelJS.Workbook();
 		const worksheet = workbook.addWorksheet("Dados");
-	  
+		
 		if (!tableRef.current) return [];
 		const tableElement = tableRef.current as HTMLTableElement; // Garante o tipo correto
 
@@ -89,40 +109,100 @@ export default function Transacoes(props: {currentUser: User | null, empresaId: 
 		saveAs(new Blob([buffer]), "dados.xlsx");
 	};
 
-	const changeFilter = async () => {
-		setData(await queryItemsByLivros(String(livroIdEscolhido)))
-	}
+	const handleChecked = (nextChecked: boolean) => {
+		setChecked(nextChecked);
+		setTipo(nextChecked ? String(saida) : String(entrada))
+		// console.log(nextChecked ? String(saida) : String(entrada))
+		// setIdCat()
+	};
 
-	useEffect(() => {
-		changeFilter()
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [livroIdEscolhido])
-	  
+	const changeLivro = async (e: string) => {
+		setLoading(true)
+		setLivroIdEscolhido(e)
+		setData(await queryItemsByLivros(e))
+		setLoading(false)
+	}
+	
+	const updateData = async () => {
+		setLoading(true)
+		setData(await queryItemsByLivros(livroIdEscolhido ?? ""))
+		setLoading(false)
+	}
+	
 	useEffect(() => {
 		const getData = async () => {
+			const categoria = await getCategoria()
+			setCategoria(categoria ?? [])
+			
+			const banco = await getBanco(String(props.currentUser?.uid), props.empresaId)
+			setBanco(banco ?? [])
+			
+			const entrada = await getTipoId("entrada")
+			const saida = await getTipoId("saída")
+			
+			setEntrada(String(entrada))
+			setSaida(String(saida))
+			
 			const livros = await getLivro(props.empresaId)
 			setLivro(livros)
-			setLivroIdEscolhido(livros[0].id)
-
-			changeFilter()
-
+			
+			let value = 0
+			for(let i = 0; i <= livros.length; i++){
+				const data = await queryItemsByLivros(livros[i].id)
+				if(data?.length != 0){
+					value = i 
+					break
+				} 
+			}
+			setLivroIdEscolhido(livros[value].id)
+			setData(await queryItemsByLivros(livros[value].id))
+			
 			setLoading(false)
 		}
-
+		
 		getData()
+
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
+
+	useEffect(() => {
+		// console.log(categoria)
+		if(categoria && categoria?.filter(c => c.c.IdTipo === tipo || (tipo == null && c.c.IdTipo === saida)).length == 1) {
+			// console.log(1)
+			console.log(categoria[0].id)
+			setIdCat(categoria[0].id)
+			setDadosModal({
+				catName: categoria[0].c.desc,
+				nomeBanco: String(dadosModal?.nomeBanco),
+				tipoValor: String(dadosModal?.tipoValor),
+				id: String(dadosModal?.id),
+				i: {
+					IdLivro: dadosModal?.i.IdLivro ?? "",
+					IdCategoria: categoria[0].id ?? "",
+					IdBanco: dadosModal?.i.IdBanco ?? "",
+					desc: dadosModal?.i.desc ?? "",
+					value: dadosModal?.i.value ?? 0, 
+					day: dadosModal?.i.day ?? "",
+					month: dadosModal?.i.month ?? "",
+					year: dadosModal?.i.year ?? "",
+				}
+			})
+		}
+
+	}, [categoria, dadosModal?.i.IdBanco, dadosModal?.i.IdLivro, dadosModal?.i.day, dadosModal?.i.desc, dadosModal?.i.month, dadosModal?.i.value, dadosModal?.i.year, dadosModal?.id, dadosModal?.nomeBanco, dadosModal?.tipoValor, saida, tipo])
 
 	if(loading) return <Loading2/>
 	return(
 		<>
-			<div className="transacoes">
+			<div className="transacoes" style={{
+				display: openModal ? "none" : "block"
+			}}>
 				<div className="box-transacoes">
 					<div className="filtro">
 						<select
 							value={livroIdEscolhido}
 							onChange={(event) => {
-								setLivroIdEscolhido(event.target.value)
+								changeLivro(event.target.value)
 							}}
 						>
 							{livros?.map((l, index) => {
@@ -147,7 +227,10 @@ export default function Transacoes(props: {currentUser: User | null, empresaId: 
 						</thead>
 						<tbody>
 							{data?.map((i, innerIndex) => (
-								<tr key={`row-${innerIndex}`}>
+								<tr className="row" key={`row-${innerIndex}`} onClick={() => {
+									setOpenModal(!openModal)
+									setDadosModal(i)
+								}}>
 									<td>{i.i.day}-{i.i.month}-{i.i.year}</td>
 									<td>{i.catName}</td>
 									<td>{i.i.desc}</td>
@@ -160,6 +243,173 @@ export default function Transacoes(props: {currentUser: User | null, empresaId: 
 							))}
 						</tbody>
 					</table>
+				</div>
+			</div>
+			<div className="background" style={{
+				display: openModal ? "flex" : "none"
+			}}>
+				<div className="modal-transacao">
+					<span onClick={() => {setOpenModal(!openModal)}}>X</span>
+
+					<h1>Item de Transação</h1>
+					<div className="info">
+						<h3>Data:</h3>
+						<input type="date" value={`${dadosModal?.i.year}-${dadosModal?.i.month}-${dadosModal?.i.day}`} onChange={(e) => {
+							setDadosModal({
+								catName: String(dadosModal?.catName),
+								nomeBanco: String(dadosModal?.nomeBanco),
+								tipoValor: String(dadosModal?.tipoValor),
+								id: String(dadosModal?.id),
+								i: {
+									IdLivro: dadosModal?.i.IdLivro ?? "",
+									IdCategoria: dadosModal?.i.IdCategoria ?? "",
+									IdBanco: dadosModal?.i.IdBanco ?? "",
+									desc: dadosModal?.i.desc ?? "",
+									value: dadosModal?.i.value ?? 0, 
+									day: e.target.value.split("-")[2] ?? "",
+									month: e.target.value.split("-")[1] ?? "",
+									year: e.target.value.split("-")[0] ?? "",
+								}
+							})
+						}}/>
+					</div>
+					<div className="info">
+						<h3>Categoria:</h3>
+						<select id="categoria" value={IdCat} onChange={async (e) => {
+							setIdCat(e.target.value)
+							const cat = await getCategoriaById(e.target.value)
+							console.log(e.target.value)
+
+							
+							setDadosModal({
+								catName: cat.c.desc,
+								nomeBanco: String(dadosModal?.nomeBanco),
+								tipoValor: String(dadosModal?.tipoValor),
+								id: String(dadosModal?.id),
+								i: {
+									IdLivro: dadosModal?.i.IdLivro ?? "",
+									IdCategoria: e.target.value ?? "",
+									IdBanco: dadosModal?.i.IdBanco ?? "",
+									desc: dadosModal?.i.desc ?? "",
+									value: dadosModal?.i.value ?? 0, 
+									day: dadosModal?.i.day ?? "",
+									month: dadosModal?.i.month ?? "",
+									year: dadosModal?.i.year ?? "",
+								}
+							})
+						}}>
+							{ categoria
+								?.filter(c => c.c.IdTipo === tipo || (tipo == null && c.c.IdTipo === saida))
+								.map(c => (
+									<option key={c.id} value={c.id}>
+										{c.c.desc}
+									</option>
+								)) }
+						</select>
+					</div>
+					<div className="info">
+						<h3>Desc.:</h3>
+						<input type="text" name="desc" id="desc" value={dadosModal?.i.desc} onChange={(e) => {
+							setDadosModal({
+								catName: String(dadosModal?.catName),
+								nomeBanco: String(dadosModal?.nomeBanco),
+								tipoValor: String(dadosModal?.tipoValor),
+								id: String(dadosModal?.id),
+								i: {
+									IdLivro: dadosModal?.i.IdLivro ?? "",
+									IdCategoria: dadosModal?.i.IdCategoria ?? "",
+									IdBanco: dadosModal?.i.IdBanco ?? "",
+									desc: e.target.value ?? "",
+									value: dadosModal?.i.value ?? 0, 
+									day: dadosModal?.i.day ?? "",
+									month: dadosModal?.i.month ?? "",
+									year: dadosModal?.i.year ?? "",
+								}
+							})
+						}}/>
+					</div>
+					<div className="info">
+						<h3>Banco:</h3>
+						<select 
+							id="banco"
+							value={dadosModal?.nomeBanco}
+							onChange={(e) => {
+								setDadosModal({
+									catName: String(dadosModal?.catName),
+									nomeBanco: String(dadosModal?.nomeBanco),
+									tipoValor: String(dadosModal?.tipoValor),
+									id: String(dadosModal?.id),
+									i: {
+										IdLivro: dadosModal?.i.IdLivro ?? "",
+										IdCategoria: dadosModal?.i.IdCategoria ?? "",
+										IdBanco: e.target.value ?? "",
+										desc: dadosModal?.i.desc ?? "",
+										value: dadosModal?.i.value ?? 0, 
+										day: dadosModal?.i.day ?? "",
+										month: dadosModal?.i.month ?? "",
+										year: dadosModal?.i.year ?? "",
+									}
+								})
+							}}
+						>
+							{banco?.map((b) => {
+								return (
+									<option key={b.id} value={b.id}>{b.b.nameBanco}</option>
+								)
+							})}
+						</select>
+					</div>
+					<div className="info">
+						<h3>entrada</h3>
+						<Switch
+							onChange={handleChecked}
+							checked={checked}
+							uncheckedIcon={false}
+							checkedIcon={false}
+							offColor="#4caf50"
+							onColor="#f44336"
+							id="tipo"
+							/>
+						<h3>saída</h3>
+					</div>
+					<div className="info">
+						<h3>Valor:</h3>
+						<p>R$</p>
+						<input type="number" name="valor" id="valor" value={dadosModal?.i.value} onChange={(e) => {
+							setDadosModal({
+								catName: String(dadosModal?.catName),
+								nomeBanco: String(dadosModal?.nomeBanco),
+								tipoValor: String(dadosModal?.tipoValor),
+								id: String(dadosModal?.id),
+								i: {
+									IdLivro: dadosModal?.i.IdLivro ?? "",
+									IdCategoria: dadosModal?.i.IdCategoria ?? "",
+									IdBanco: dadosModal?.i.IdBanco ?? "",
+									desc: dadosModal?.i.desc ?? "",
+									value: Number(e.target.value), 
+									day: dadosModal?.i.day ?? "",
+									month: dadosModal?.i.month ?? "",
+									year: dadosModal?.i.year ?? "",
+								}
+							})
+						}}/>
+					</div>
+
+					<div className="btn">
+						<button onClick={() => {
+							if(dadosModal?.i) updateItem(String(dadosModal?.id), dadosModal?.i);
+							setOpenModal(!openModal)
+							updateData()
+						}} className="btn-edit">editar dados</button>
+
+						<button onClick={async () => {
+							removeItem(String(dadosModal?.id))
+							const tipoId = await getTipoId(String(dadosModal?.tipoValor))
+							await updateSaldo(props.empresaId, Number(dadosModal?.i.value), String(tipoId)) 
+							setOpenModal(!openModal)
+							updateData()
+						}} className="btn-del">excluir item</button>
+					</div>
 				</div>
 			</div>
 		</>

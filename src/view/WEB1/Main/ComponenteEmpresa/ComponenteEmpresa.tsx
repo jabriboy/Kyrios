@@ -7,14 +7,14 @@ import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { auth } from "../../../../model/firebaseConfig"
 
-export default function ComponenteEmpresa(props: {currentUser: User | null, planoDesc: string | null}) {
+export default function ComponenteEmpresa(props: {currentUser: User | null, planoDesc: string | null, setEmpresa: (value: string) => void}) {
 	interface Cadastro {desc: string, area: string}
 
 	const { getEmpresa } = EmpresaDB()
 	const [empresas, setEmpresas] = useState<{id: string, e: Empresa}[]>()
 	const [modal, setModal] = useState(false)
 
-	const { register, handleSubmit, formState: { errors } } = useForm<Cadastro>();
+	const { register, handleSubmit, formState: { errors }, reset } = useForm<Cadastro>();
 
 	const [currentUser, setCurrentUser] = useState<User | null>(null);
 
@@ -50,14 +50,16 @@ export default function ComponenteEmpresa(props: {currentUser: User | null, plan
 			area: data.area,
 			saldo: 0
 		})
-
+		reset()
 	};
 
 	return(
 		<>
 			<div className="componente-empresa">
 				<div className="empresas-box">
-					<select name="empresa" id="empresa">
+					<select name="empresa" id="empresa" onChange={(e) => {
+						props.setEmpresa(e.target.value)
+					}}>
 						{empresas?.map((e) => {
 							return (
 								<option key={e.id} value={e.id}>{e.e.desc}</option>
@@ -66,9 +68,11 @@ export default function ComponenteEmpresa(props: {currentUser: User | null, plan
 					</select>
 					<button onClick={() => {
 						// console.log(props.planoDesc)
-						if(props.planoDesc?.includes("premium") || props.planoDesc?.includes("diamond")){
+						if(props.planoDesc?.includes("diamond")){
 							setModal(!modal)
-						} 
+						} else{
+							alert("Para criar mais empresas é necessário ter o plano KYRIOS.PRO DIAMOND")
+						}
 					}}>+</button>
 				</div>
 				<div className="add-Empresa" style={{
@@ -95,7 +99,7 @@ export default function ComponenteEmpresa(props: {currentUser: User | null, plan
 							/>
 							{errors.area?.message && <p>{String(errors.area.message)}</p>}
 						</div>
-						<button type="submit">Adicioar</button>
+						<button type="submit">Adicionar</button>
 					</form>
 				</div>
 			</div>

@@ -30,6 +30,7 @@ export default function Home() {
 	const [plano, setPlano] = useState<Plano | null | false>(null)
 
 	useEffect(() => {
+		// console.log(currentComponent)
 		async function getPlano(user: User | null){
 			const plano = await getPlanoByEmail(String(user?.email))
 			if(plano == false) return false
@@ -45,36 +46,37 @@ export default function Home() {
 			const plano = await getPlano(user); // Aguarda o retorno da função getPlano
 			
 			if (plano === false) {
-				console.log("Plano não encontrado");
+				// console.log("Plano não encontrado");
 				navigate('/')
 				return;
 			}
 			else{
+				// console.log(plano)
 				setPlano(plano)
 				setCurrentUser(user); // Atualiza o estado do usuário
 				setLoading(false); // Finaliza o estado de carregamento
 			}
 
-			const empresa = await getEmpresa(String(currentUser?.uid))
-			setEmpresa(empresa[0]?.id)
+			const emp = await getEmpresa(String(currentUser?.uid))
+			if(empresa == null) setEmpresa(emp[0]?.id)
 		});
 		
 		return () => unsubscribe();
 
-	}, [currentUser?.uid, getEmpresa, getPlanoByEmail, navigate]);
+	}, [currentComponent, currentUser?.uid, empresa, getEmpresa, getPlanoByEmail, navigate]);
 
 	const renderComponent = () => {
 		switch (currentComponent) {
 			case 'página inicial':
 				return <PaginaInicial currentUser={currentUser}/>
 			case 'cadastrar transação':
-				return <Cadastro currentUser={currentUser} empresaId={String(empresa)} planoDesc={plano && "desc" in plano ? plano.desc : null}/>
+				return <Cadastro handleClick={(value: string) => {setCurrentComponent(value)}} currentUser={currentUser} empresaId={String(empresa)} planoDesc={plano && "desc" in plano ? plano.desc : null} setCurrentComponent={(value: string) => {setCurrentComponent(value)}}/>
 			case 'cadastrar banco':
-				return <CadastroBanco currentUser={currentUser} planoDesc={plano && "desc" in plano ? plano.desc : null}/>
+				return <CadastroBanco setCurrentComponent={(value: string) => {setCurrentComponent(value)}} handleClick={(value: string) => {setCurrentComponent(value)}} loading={null} currentUser={currentUser} planoDesc={plano && "desc" in plano ? plano.desc : null} empresa={String(empresa)}/>
 			case 'transações':
 				return <Transacoes currentUser={currentUser} empresaId={String(empresa)}/>
 			case 'criar livro caixa':
-				return <CadastroLivro currentUser={currentUser} planoDesc={plano && "desc" in plano ? plano.desc : null}/>
+				return <CadastroLivro setCurrentComponent={(value: string) => {setCurrentComponent(value)}} handleClick={(value: string) => {setCurrentComponent(value)}} empresaId={String(empresa)} currentUser={currentUser} planoDesc={plano && "desc" in plano ? plano.desc : null}/>
 			// case 'extrato':
 			// 	return <h1>extrato</h1>
 			
@@ -84,18 +86,18 @@ export default function Home() {
 		}
 	}
 
-	if (loading) {return <Loading/>}
+	if (loading) { return <Loading/> }
 	return(
 		<>	
 			<div className="main">
-				<BarraLateral currentUser={currentUser} handleClick={(value: string) => {setCurrentComponent(value)}} planoDesc={plano && "desc" in plano ? plano.desc : null}/>
+				<BarraLateral currentUser={currentUser} handleClick={(value: string) => {setCurrentComponent(value)}} currentComponent={currentComponent} planoDesc={plano && "desc" in plano ? plano.desc : null} setEmpresa={(value: string) => {setEmpresa(value)}}/>
 				<div className="right-box">
-					<BarraSuperior currentUser={currentUser} planoDesc={plano && "desc" in plano ? plano.desc : null}/>
+					<BarraSuperior empresa={String(empresa)} currentUser={currentUser} planoDesc={plano && "desc" in plano ? plano.desc : null}/>
 
 					<div className="render-components">
 						{renderComponent()}
 
-						<img src={plus} alt="cadastrar transação" className="btn-add" onClick={() => {setCurrentComponent("cadastrar transação")}}/>
+						<img src={plus} alt="cadastrar transação" className="btn-add" onClick={() => {setCurrentComponent("cadastrar transação")}} />
 					</div>
 				</div>
 			</div>
