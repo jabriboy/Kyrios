@@ -14,17 +14,18 @@ const Ofx = () => {
 				console.error("Erro ao fazer o parse do OFX:", error);
 			}
 		} else if (type === 'csv') {
-			console.log("entrou csv")
+			// console.log("entrou csv")
 			try {
 				const json = await parseCsvToJson(file, bankName);
 				// console.log("CSV to JSON gerado:", json);
+				if(!json) return undefined
 				return {json: json, file: bankName.toLowerCase()}
 			} catch (error) {
 				console.error("Erro ao fazer o parse do CSV:", error);
 			}
 		}
 
-		return {json: undefined, file: ""}
+		return undefined
 	};
   
 	const parseOfxToJson = async (file: File) => {
@@ -57,9 +58,9 @@ const Ofx = () => {
 	
 	const parseCsvToJson = async (file: File, bankName: string) => {
 		// passar para o banco correto
-		console.log(bankName)
+		// console.log(bankName)
 		if(bankName.toLowerCase() == 'banco inter'){
-			console.log("entrou inter")
+			// console.log("entrou inter")
 			return await parseInterCsvToJson(file)
 		} else if(bankName.toLowerCase() == 'nubank'){
 			return await parseNuBankCsvToJson(file)
@@ -74,7 +75,7 @@ const Ofx = () => {
 	  
   
 	const parseInterCsvToJson = async (file: File): Promise<unknown[]> => {
-		console.log(file)
+		// console.log(file)
 		return new Promise((resolve, reject) => {
 			const reader = new FileReader();
 	  
@@ -90,7 +91,7 @@ const Ofx = () => {
 				const headerIndex = rows.findIndex(row => row.startsWith("Data Lançamento"));
 				if (headerIndex === -1) {
 					reject(new Error("Cabeçalho esperado não encontrado."));
-					return;
+					return false;
 				}
 		
 				// Pega as linhas do cabeçalho correto e do conteúdo
@@ -140,7 +141,7 @@ const Ofx = () => {
 			  );
 			  if (headerIndex === -1) {
 				reject(new Error("Cabeçalho esperado não encontrado."));
-				return;
+				return false;
 			  }
 	  
 			  // Pega as linhas do cabeçalho correto e do conteúdo

@@ -16,7 +16,7 @@ const AuthDB = () => {
 				await addUser({
 					UserID: userCredential.user.uid,
 					StripeUserID: "",
-					IdPlano: String(await getPlanoId("free")),
+					IdPlano: String(await getPlanoId("premium free")),
 					username: username,
 					email: email,
 					status: ""
@@ -61,7 +61,7 @@ const AuthDB = () => {
 			await addUser({
 				UserID: result.user.uid,
 				StripeUserID: "",
-				IdPlano: String(await getPlanoId("free")),
+				IdPlano: String(await getPlanoId("premium free")),
 				username: String(result.user.displayName),
 				email: String(result.user.email),
 				status: "active"
@@ -87,7 +87,7 @@ const AuthDB = () => {
 			await addUser({
 				UserID: result.user.uid,
 				StripeUserID: "",
-				IdPlano: String(await getPlanoId("free")),
+				IdPlano: String(await getPlanoId("premium free")),
 				username: "",
 				email: String(result.user.email),
 				status: ""

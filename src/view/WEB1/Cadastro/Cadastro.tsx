@@ -3,8 +3,9 @@ import CadastroTransacao from "../CadastroTransação/CadastroTransacao"
 import CadastroArquivo from "../CadastroArquivo/CadastroArquivo"
 import { User } from "firebase/auth"
 import './CadastroStyle.css'
+import GoToPro from "../GoToPro/GoToPro"
 
-export default function Cadastro(props: {currentUser: User | null, empresaId: string, planoDesc: string | null, setCurrentComponent: (value: string) => void, handleClick: (value: string) => void}){
+export default function Cadastro(props: {currentUser: User | null, empresaId: string, planoDesc: string | null, setCurrentComponent: (value: string) => void, handleClick: (value: string) => void, block: boolean}){
 	const [compEscolhido, setCompEscolhido] = useState<string | null>('transação')
 	const [loading, setLoading] = useState('none')
 	const [pro, setPro] = useState(true)
@@ -15,6 +16,7 @@ export default function Cadastro(props: {currentUser: User | null, empresaId: st
 		transition: '.5s'
 	}
 
+	if(props.block) return <GoToPro desc="Limite máximo de transações para o plano Gratuito" handleClick={props.handleClick}/>
 	return(
 		<>
 			{compEscolhido === 'transação' || compEscolhido === null 

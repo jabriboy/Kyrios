@@ -5,7 +5,7 @@ import Item from "../../../model/interfaces/Item"
 import Loading2 from "../Loading/Loading2"
 import "./PaginaInicialStyle.css"
 
-export default function PaginaInicial(props: {currentUser: User | null}){
+export default function PaginaInicial(props: {currentUser: User | null, handleClick: (value: string) => void}){
 	const { getLivoItemByUserId } = ItemDB()
 
 	const [data, setData] = useState<{ tipoValor: string; nomeBanco: string; catName: string, id: string; i: Item }[][] | undefined>(undefined)

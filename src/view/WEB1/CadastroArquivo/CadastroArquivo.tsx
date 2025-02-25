@@ -25,6 +25,7 @@ export default function CadastroArquivo(props: {currentUser: User | null, empres
 	const { handleSubmit, formState: { errors }, setValue, register, reset } = useForm<CadastroArquivo>();
 	
 	const [banco, setBanco] = useState<{id: string, b: Banco}[]>()
+	const [bancoIdInicial, setBancoIdInicial] = useState<string>()
 	const [livro, setLivro] = useState<{id: string, l: Livro}[]>()
 	const [files, setFiles] = useState<File>();
 	const [loading, setLoading] = useState(true);
@@ -36,9 +37,13 @@ export default function CadastroArquivo(props: {currentUser: User | null, empres
 		setBankName(data.banco)
 
 		const jsonData: {json: OFX | unknown, file: string} | undefined = await updateOfxFileOrCsv(data.file, data.banco)
-		setLoading(true)
-		await addManyByJson(jsonData, data.banco, data.livro)
-		setLoading(false)
+		if(jsonData != undefined){
+			setLoading(true)
+			await addManyByJson(jsonData, data.banco, data.livro)
+			setLoading(false)
+		} else{
+			alert("erro ao carregar o arquivo")
+		}
 		
 		reset()
 	}
@@ -125,13 +130,14 @@ export default function CadastroArquivo(props: {currentUser: User | null, empres
 						<p>Selecione o Banco</p>
 						<select
 							id="banco"
+							value={banco ? bancoIdInicial : ""}
 							onChange={(value) => {
 								// console.log(value.target.value)
+								setBancoIdInicial(String(value.target.value))
 								setValue('banco',  String(value.target.value))
 							}}
 							
 						>
-							<option value=""></option>
 							{banco?.map((b) => {
 								return (
 									<option key={b.id} value={b.id}>{b.b.nameBanco}</option>
@@ -159,7 +165,7 @@ export default function CadastroArquivo(props: {currentUser: User | null, empres
 							</p>
 						</div>
 						<p className="obs">
-							* Não possui suporte para csv de todos os bancos *
+							* Não possui suporte para csv de todos os bancos, somente banco Inter, Santander e NuBank *
 						</p>
 						<p>{files?.name}</p>
 					</div>

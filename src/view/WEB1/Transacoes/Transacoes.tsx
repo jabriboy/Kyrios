@@ -16,7 +16,7 @@ import Banco from "../../../model/interfaces/Banco"
 import BancoDB from "../../../control/BancoDB"
 import EmpresaDB from "../../../control/EmpresaDB"
 
-export default function Transacoes(props: {currentUser: User | null, empresaId: string}){
+export default function Transacoes(props: {currentUser: User | null, empresaId: string, block: boolean}){
 	const { queryItemsByLivros, updateItem, removeItem } = ItemDB()
 	const { getLivro } = LivroDB()
 	const { getCategoria, getCategoriaById } = CategoriaDB()
@@ -228,8 +228,11 @@ export default function Transacoes(props: {currentUser: User | null, empresaId: 
 						<tbody>
 							{data?.map((i, innerIndex) => (
 								<tr className="row" key={`row-${innerIndex}`} onClick={() => {
-									setOpenModal(!openModal)
-									setDadosModal(i)
+									if(props.block) {alert("Oops! Não é possível fazer essa ação com o plano Gratuito, veja nosso planos em: www.sejakyrios.com.br/planos")}
+									else{
+										setOpenModal(!openModal)
+										setDadosModal(i)
+									}
 								}}>
 									<td>{i.i.day}-{i.i.month}-{i.i.year}</td>
 									<td>{i.catName}</td>
