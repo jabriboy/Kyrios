@@ -181,7 +181,7 @@ const ItemDB = () => {
 		}
 	}
 
-	const addManyByJson = async (data: {json: OFX | unknown, file: string} | undefined, bancoID: string, livroId: string) => {
+	const addManyByJson = async (data: {json: OFX | unknown, file: string} | undefined, bancoID: string, livroId: string, userId: string) => {
 		const { getCategoria } = CategoriaDB()
 		const { getTipoId } = TipoDB()
 		const { updateSaldo } = EmpresaDB()
@@ -201,7 +201,7 @@ const ItemDB = () => {
 				const valor = transaction.TRNAMT //string
 				let valorReal = 0
 
-				const allCategoria = await getCategoria()
+				const allCategoria = await getCategoria(userId)
 				let filteredCategoria = []
 				let tipo = ""
 

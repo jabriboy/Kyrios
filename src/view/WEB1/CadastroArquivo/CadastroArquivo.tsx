@@ -39,7 +39,7 @@ export default function CadastroArquivo(props: {currentUser: User | null, empres
 		const jsonData: {json: OFX | unknown, file: string} | undefined = await updateOfxFileOrCsv(data.file, data.banco)
 		if(jsonData != undefined){
 			setLoading(true)
-			await addManyByJson(jsonData, data.banco, data.livro)
+			await addManyByJson(jsonData, data.banco, data.livro, String(props.currentUser?.uid))
 			setLoading(false)
 		} else{
 			alert("erro ao carregar o arquivo")
