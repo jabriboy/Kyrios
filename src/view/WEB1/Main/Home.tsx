@@ -17,6 +17,7 @@ import plus from '../../../assets/add.png'
 import Plano from "../../../model/interfaces/Plano";
 import Cadastro from "../Cadastro/Cadastro";
 import ItemDB from "../../../control/ItemDB";
+import CadastroCategoria from "../CadastroCategoria/CadastroCategoria";
 
 export default function Home() {
 	const { getPlanoByEmail } = UserDB()
@@ -95,9 +96,8 @@ export default function Home() {
 				return <Transacoes currentUser={currentUser} empresaId={String(empresa)} block={block}/>
 			case 'criar livro caixa':
 				return <CadastroLivro setCurrentComponent={(value: string) => {setCurrentComponent(value)}} handleClick={(value: string) => {setCurrentComponent(value)}} empresaId={String(empresa)} currentUser={currentUser} planoDesc={plano && "desc" in plano ? plano.desc : null}/>
-			// case 'extrato':
-			// 	return <h1>extrato</h1>
-			
+			case 'cadastrar categoria':
+				return <CadastroCategoria currentUser={currentUser}/>
 
 			default:
 				return <Loading/>

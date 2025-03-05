@@ -131,7 +131,7 @@ export default function Transacoes(props: {currentUser: User | null, empresaId: 
 	
 	useEffect(() => {
 		const getData = async () => {
-			const categoria = await getCategoria()
+			const categoria = await getCategoria(String(props.currentUser?.uid))
 			setCategoria(categoria ?? [])
 			
 			const banco = await getBanco(String(props.currentUser?.uid), props.empresaId)
@@ -407,7 +407,12 @@ export default function Transacoes(props: {currentUser: User | null, empresaId: 
 
 						<button onClick={async () => {
 							removeItem(String(dadosModal?.id))
-							const tipoId = await getTipoId(String(dadosModal?.tipoValor))
+							let tipoId
+							if(dadosModal?.tipoValor == 'entrada'){
+								tipoId = await getTipoId('saída')
+							} else {
+								tipoId = await getTipoId('entrada')
+							}
 							await updateSaldo(props.empresaId, Number(dadosModal?.i.value), String(tipoId)) 
 							setOpenModal(!openModal)
 							updateData()

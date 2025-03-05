@@ -1,0 +1,67 @@
+.cadastro-categoria {
+  background-color: var(--dark-blue);
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 4rem;
+  border-radius: 1.5rem;
+}
+.cadastro-categoria h2 {
+  background: var(--light-blue);
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0.5rem 1.5rem;
+  border-radius: 2.5rem;
+  color: var(--off-black);
+  margin-top: -5rem;
+  margin-bottom: 2rem;
+}
+.cadastro-categoria form {
+  margin: 0 auto;
+  width: 100%;
+  margin-bottom: -2rem;
+}
+.cadastro-categoria form div {
+  display: flex;
+  justify-content: right;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.cadastro-categoria form p {
+  color: var(--light-blue);
+  text-transform: uppercase;
+  margin: 0;
+  font-weight: bold;
+  text-align: right;
+  font-size: 0.8rem;
+  transition: 0.2s;
+}
+.cadastro-categoria form .inputTipo {
+  justify-content: space-around;
+}
+.cadastro-categoria form .add-categoria {
+  background: none;
+  margin: 0;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.cadastro-categoria form input, .cadastro-categoria form select {
+  border: none;
+  border-radius: 2.5rem;
+  box-sizing: border-box;
+  width: 65%;
+  padding: 0 0.5rem;
+  height: 1.5rem;
+  font-size: 0.8rem;
+}
+.cadastro-categoria form button {
+  cursor: pointer;
+  margin-top: 2rem;
+  border: none;
+  width: 100%;
+  background: var(--primary-blue);
+  border-radius: 2.5rem;
+  padding: 0.5rem;
+  color: var(--off-white);
+  text-transform: capitalize;
+}/*# sourceMappingURL=CadastroCategoriaStyle.css.map */

@@ -1,4 +1,5 @@
 interface Categoria{
+	UserId: string
 	IdTipo: string
 	desc: string
 }

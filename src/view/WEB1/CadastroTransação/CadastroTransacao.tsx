@@ -16,6 +16,7 @@ import LivroDB from "../../../control/LivroDB";
 import EmpresaDB from "../../../control/EmpresaDB";
 import CadastroLivro from "../CadastroLivro/CadastroLivro";
 import CadastroBanco from "../CadastroBanco/CadastroBanco";
+import CadastroCategoria from "../CadastroCategoria/CadastroCategoria";
 
 export default function CadastroTransacao(props: {currentUser: User | null, empresaId: string, planoDesc: string | null, loading: Dispatch<SetStateAction<string>>, setCurrentComponent: (value: string) => void, handleClick: (value: string) => void}) {
 	interface CadastroTransacao {livro: string, categoria: string, desc: string, tipo: string, valor: number, data: string, banco: string}
@@ -79,7 +80,7 @@ export default function CadastroTransacao(props: {currentUser: User | null, empr
 	
 	useEffect(() => {
 		const getData = async () => {
-			const categoria = await getCategoria()
+			const categoria = await getCategoria(String(props.currentUser?.uid))
 			setCategoria(categoria ?? [])
 			
 			const banco = await getBanco(String(props.currentUser?.uid), String(props.empresaId))
@@ -108,8 +109,18 @@ export default function CadastroTransacao(props: {currentUser: User | null, empr
 		props.loading('none')
 		return <Loading2/>
 	}
-	if (livro?.length == 0) {return <CadastroLivro setCurrentComponent={props.setCurrentComponent} handleClick={props.handleClick} empresaId={props.empresaId} currentUser={props.currentUser} planoDesc={props.planoDesc}/>}
-	if (banco?.length == 0) {return <CadastroBanco setCurrentComponent={props.setCurrentComponent} handleClick={props.handleClick} loading={props.loading} currentUser={props.currentUser} planoDesc={props.planoDesc} empresa={props.empresaId}/>}
+	if (livro?.length == 0) {
+		props.loading('none')
+		return <CadastroLivro setCurrentComponent={props.setCurrentComponent} handleClick={props.handleClick} empresaId={props.empresaId} currentUser={props.currentUser} planoDesc={props.planoDesc}/>
+	}
+	if (banco?.length == 0) {
+		props.loading('none')
+		return <CadastroBanco setCurrentComponent={props.setCurrentComponent} handleClick={props.handleClick} loading={props.loading} currentUser={props.currentUser} planoDesc={props.planoDesc} empresa={props.empresaId}/>
+	}
+	if (categoria?.length == 0) { 
+		props.loading('none')
+		return <CadastroCategoria currentUser={props.currentUser}/>
+	}
 	return(
 		<>
 			{/* {console.log("aqui")} */}

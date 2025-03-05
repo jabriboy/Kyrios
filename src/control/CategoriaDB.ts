@@ -4,12 +4,14 @@ import Categoria from "../model/interfaces/Categoria"
 
 const CategoriaDB = () => {
 	
-	const getCategoria = async (): Promise<{ id: string; c: Categoria }[]> => {
+	const getCategoria = async (userId: string): Promise<{ id: string; c: Categoria }[]> => {
 		try{
-			const querySnapshot = await getDocs(collection(db, "Categoria"))
+			const q = query(collection(db, "Categoria"), where("UserId", "==", userId))
+			const querySnapshot = await getDocs(q)
 			const allCategoria = querySnapshot.docs.map(doc => ({
 				id: doc.id,
 				c: {
+					UserId: doc.data().UserId || "",
 					IdTipo: doc.data().IdTipo || "",
 					desc: doc.data().desc || ""
 				}
@@ -21,19 +23,19 @@ const CategoriaDB = () => {
 			console.log("Control Error: ", e)
 		}
 
-		return [{id: "", c: {IdTipo: "", desc: ""}}]
+		return [{id: "", c: {UserId: "", IdTipo: "", desc: ""}}]
 	}
 
 	const getCategoriaById = async (id: string): Promise<{c: Categoria}> => {
 		try{
 			const querySnapshot = await getDoc(doc(db, "Categoria", id))
 
-			return { c: {IdTipo: querySnapshot.data()?.IdTipo, desc: querySnapshot.data()?.desc} }
+			return { c: {UserId: querySnapshot.data()?.UserId, IdTipo: querySnapshot.data()?.IdTipo, desc: querySnapshot.data()?.desc} }
 		} catch(e){
 			console.log("Control Error: ", e)
 		}
 
-		return {c: {IdTipo: "", desc: ""}}
+		return {c: {UserId: "", IdTipo: "", desc: ""}}
 	}
 
 	const getCategoriaId = async (desc: string) => {
