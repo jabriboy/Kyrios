@@ -115,6 +115,26 @@ const ItemDB = () => {
 		  console.log("Control Error: ", e);
 		}
 	}
+
+	const queryItemsByMonth = async (livro: string, month: string) => {
+		const data = await queryItemsByLivros(livro)
+
+		const newData = data?.filter((i) => {
+			if(month == "0"){
+				return i
+			}
+			else if(month.length == 1){
+				month = "0"+month
+			}
+			if(i.i.month == month){
+				return {
+					i
+				}
+			}
+		})
+
+		return newData || undefined
+	}
 	  
 
 	const getItem = async (empresaId: string): Promise<{ id: string; i: Item }[][]> => {
@@ -281,7 +301,8 @@ const ItemDB = () => {
 		removeItem,
 		addManyByJson,
 		getLivoItemByUserId,
-		queryItemsByLivros
+		queryItemsByLivros,
+		queryItemsByMonth
 	}
 
 }

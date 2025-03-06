@@ -7,6 +7,25 @@
 .transacoes .box-transacoes {
   justify-content: space-between;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.transacoes .box-transacoes .filtro select {
+  cursor: pointer;
+}
+.transacoes .box-transacoes .extrato {
+  cursor: pointer;
+  border: none;
+  background: var(--primary-blue);
+  border-radius: 2.5rem;
+  padding: 0.5rem;
+  color: var(--off-white);
+  text-transform: capitalize;
+  transition: 0.3s;
+}
+.transacoes .box-transacoes .extrato:hover {
+  transform: scale(1.05, 1.05);
+  transition: 0.3s;
 }
 .transacoes .div-table {
   overflow-y: auto;

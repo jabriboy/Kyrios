@@ -17,7 +17,7 @@ import BancoDB from "../../../control/BancoDB"
 import EmpresaDB from "../../../control/EmpresaDB"
 
 export default function Transacoes(props: {currentUser: User | null, empresaId: string, block: boolean}){
-	const { queryItemsByLivros, updateItem, removeItem } = ItemDB()
+	const { queryItemsByMonth, updateItem, removeItem } = ItemDB()
 	const { getLivro } = LivroDB()
 	const { getCategoria, getCategoriaById } = CategoriaDB()
 	const { getTipoId } = TipoDB()
@@ -26,6 +26,9 @@ export default function Transacoes(props: {currentUser: User | null, empresaId: 
 
 	const tableRef = useRef(null);
 
+	const meses = ["todos os meses", "janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"]
+
+	const [mes, setMes] = useState("0")
 	const [data, setData] = useState<{ tipoValor: string; nomeBanco: string; catName: string; id: string; i: Item }[] | undefined>(undefined)
 	const [livros, setLivro] = useState<{ id: string; l: Livro; }[]>()
 	const [livroIdEscolhido, setLivroIdEscolhido] = useState<string>()
@@ -119,13 +122,20 @@ export default function Transacoes(props: {currentUser: User | null, empresaId: 
 	const changeLivro = async (e: string) => {
 		setLoading(true)
 		setLivroIdEscolhido(e)
-		setData(await queryItemsByLivros(e))
+		setData(await queryItemsByMonth(e, mes))
+		setLoading(false)
+	}
+
+	const changeMes = async (e: string) => {
+		setLoading(true)
+		setMes(e)
+		setData(await queryItemsByMonth(String(livroIdEscolhido), e))
 		setLoading(false)
 	}
 	
 	const updateData = async () => {
 		setLoading(true)
-		setData(await queryItemsByLivros(livroIdEscolhido ?? ""))
+		setData(await queryItemsByMonth(livroIdEscolhido ?? "", mes))
 		setLoading(false)
 	}
 	
@@ -148,14 +158,14 @@ export default function Transacoes(props: {currentUser: User | null, empresaId: 
 			
 			let value = 0
 			for(let i = 0; i <= livros.length; i++){
-				const data = await queryItemsByLivros(livros[i].id)
+				const data = await queryItemsByMonth(livros[i]?.id, mes)
 				if(data?.length != 0){
 					value = i 
 					break
 				} 
 			}
 			setLivroIdEscolhido(livros[value].id)
-			setData(await queryItemsByLivros(livros[value].id))
+			setData(await queryItemsByMonth(livros[value]?.id, mes))
 			
 			setLoading(false)
 		}
@@ -169,7 +179,7 @@ export default function Transacoes(props: {currentUser: User | null, empresaId: 
 		// console.log(categoria)
 		if(categoria && categoria?.filter(c => c.c.IdTipo === tipo || (tipo == null && c.c.IdTipo === saida)).length == 1) {
 			// console.log(1)
-			console.log(categoria[0].id)
+			// console.log(categoria[0].id)
 			setIdCat(categoria[0].id)
 			setDadosModal({
 				catName: categoria[0].c.desc,
@@ -209,9 +219,19 @@ export default function Transacoes(props: {currentUser: User | null, empresaId: 
 								return <option key={index} value={l.id}>{l.l.desc}</option>
 							})}
 						</select>
+						<select
+							value={mes}
+							onChange={(event) => {
+								changeMes(event.target.value)
+							}}
+						>
+							{meses?.map((m, index) => {
+								return <option key={index} value={index}>{m}</option>
+							})}
+						</select>
 					</div>
 					<h2>Transações</h2>
-					<button onClick={handleClick}>baixar extrato</button>
+					<button className="extrato" onClick={handleClick}>baixar extrato</button>
 				</div>
 				<div className="div-table">
 					<table ref={tableRef}>
@@ -281,9 +301,8 @@ export default function Transacoes(props: {currentUser: User | null, empresaId: 
 						<select id="categoria" value={IdCat} onChange={async (e) => {
 							setIdCat(e.target.value)
 							const cat = await getCategoriaById(e.target.value)
-							console.log(e.target.value)
+							// console.log(e.target.value)
 
-							
 							setDadosModal({
 								catName: cat.c.desc,
 								nomeBanco: String(dadosModal?.nomeBanco),

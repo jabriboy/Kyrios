@@ -6,6 +6,27 @@
 	.box-transacoes{
 		justify-content: space-between;
 		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		.filtro{
+			select{
+				cursor: pointer;
+			}
+		}
+		.extrato{
+			cursor: pointer;
+			border: none;
+			background: var(--primary-blue);
+			border-radius: 2.5rem;
+			padding: .5rem;
+			color: var(--off-white);
+			text-transform: capitalize;
+			transition: .3s;
+		}
+		.extrato:hover{
+			transform: scale(1.05, 1.05);
+			transition: .3s;
+		}
 	}
 	.div-table{
 		overflow-y: auto;

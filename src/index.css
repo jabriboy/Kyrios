@@ -12,11 +12,12 @@
 }
 
 @font-face {
-	font-family: 'LeagueSpartan';
-	src: url('./src/assets/fonts/League_Spartan/LeagueSpartan-VariableFont_wght.ttf') format('truetype');
+	font-family: 'League Spartan';
+	/* src: url('./src/assets/fonts/League_Spartan/LeagueSpartan-VariableFont_wght.ttf') format('truetype'); */
+	
 }
 
 body{
 	margin: 0;
-	font-family: 'LeagueSpartan'
+	font-family: 'League Spartan'
 }

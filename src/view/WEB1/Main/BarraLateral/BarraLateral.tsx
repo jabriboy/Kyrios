@@ -50,7 +50,7 @@ export default function BarraLateral(props: {currentUser: User | null, handleCli
 				</ul>
 
 				<div className="btn-premium" onClick={() => {
-					{console.log(props?.planoDesc)}
+					// {console.log(props?.planoDesc)}
 					navigate('/planos')
 				}} style={{
 					display: props.planoDesc != null ? (props.planoDesc?.includes("premium") || props.planoDesc?.includes("diamond") ? "none" : "block") : "block"

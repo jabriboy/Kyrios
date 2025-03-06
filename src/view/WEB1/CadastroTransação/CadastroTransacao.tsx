@@ -48,12 +48,12 @@ export default function CadastroTransacao(props: {currentUser: User | null, empr
 	const handleChange = (nextChecked: boolean) => {
 		setChecked(nextChecked);
 		setTipo(nextChecked ? String(saida) : String(entrada))
-		console.log(nextChecked ? String(saida) : String(entrada))
+		// console.log(nextChecked ? String(saida) : String(entrada))
 		setValue('tipo', nextChecked ? String(saida) : String(entrada))
 	};
 
 	const onSubmit = async (data: CadastroTransacao) => {
-		console.log('Cadastro:', data)
+		// console.log('Cadastro:', data)
 		const dia = data.data.split("-")[2]
 		const mes = data.data.split("-")[1]
 		const ano = data.data.split("-")[0]

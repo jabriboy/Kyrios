@@ -19,7 +19,7 @@ export default function CadastroEmpresa() {
 	const { register, handleSubmit, formState: { errors } } = useForm<Cadastro>();
 
 	const onSubmit = async (data: Cadastro) => {
-		console.log('Login Data:', data)
+		// console.log('Login Data:', data)
 		await addEmpresa({
 			IdUser: String(currentUser?.uid),
 			desc: data.desc,

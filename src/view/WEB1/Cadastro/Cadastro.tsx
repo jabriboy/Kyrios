@@ -34,7 +34,7 @@ export default function Cadastro(props: {currentUser: User | null, empresaId: st
 				<div className="bottom" onClick={() => {
 					// console.log(props.planoDesc)
 					if(props.planoDesc?.includes("diamond")){
-						console.log(props.planoDesc)
+						// console.log(props.planoDesc)
 						setCompEscolhido('arquivo')
 						setPro(false)
 					} else{

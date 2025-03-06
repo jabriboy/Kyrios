@@ -25,7 +25,7 @@ export default function CadastroCategoria(props: {currentUser: User | null}){
 	}
 
 	const onSubmit = async (data: CadastroCategoria) => {
-		console.log("data: ", data)
+		// console.log("data: ", data)
 		await addCategoria({
 			UserId: String(props.currentUser?.uid),
 			IdTipo: String(tipo),
@@ -37,7 +37,7 @@ export default function CadastroCategoria(props: {currentUser: User | null}){
 	const handleChange = (nextChecked: boolean) => {
 		setChecked(nextChecked);
 		setTipo(nextChecked ? String(saida) : String(entrada))
-		console.log(nextChecked ? String(saida) : String(entrada))
+		// console.log(nextChecked ? String(saida) : String(entrada))
 		setValue('tipo', nextChecked ? String(saida) : String(entrada))
 	};
 
