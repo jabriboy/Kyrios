@@ -65,12 +65,12 @@ const UserDB = () => {
 	}
 
 	const getPlanoByEmail = async (email: string) => {
-		const { getPlanoByPriceId } = PlanoDB()
+		const { getPlanoByPlanoId } = PlanoDB()
 		const q = query(collection(db, "User"), where("email", "==", `${email}`))
 		const querySnapshot = await getDocs(q)
 
 		if (querySnapshot.docs.length == 0) return false
-
+		
 		const user = querySnapshot.docs.map(doc => {
 			return ({
 				id: doc.id,
@@ -87,7 +87,7 @@ const UserDB = () => {
 
 		if(user[0].u.status == 'deactive') return false
 		// console.log(user[0].u.IdPlano)
-		const plano = getPlanoByPriceId(user[0].u.IdPlano)
+		const plano = await getPlanoByPlanoId(user[0].u.IdPlano)
 
 		return plano
 	}

@@ -41,13 +41,20 @@ const PlanoDB = () => {
 		}
 	}
 
-	const getPlanoByPlanoId = async (planoId: string) => {
+	const getPlanoByPlanoId = async (planoId: string): Promise<Plano | null> => {
 		try{
 			const docRef = doc(db, "Plano", planoId);
 			const docSnap = await getDoc(docRef);
 
 			if (docSnap.exists()) {
-				return docSnap.data(); // Retorna os dados do documento
+				const plano = {
+					link: docSnap.data().link,
+					desc: docSnap.data().desc,
+					priceId: docSnap.data().priceId,
+					price: docSnap.data().price,
+					duration: docSnap.data().duration
+				}
+				return plano; // Retorna os dados do documento
 			} else {
 				console.log("Nenhum documento encontrado com o ID fornecido.");
 				return null;
@@ -55,6 +62,8 @@ const PlanoDB = () => {
 		} catch(e){
 			console.log("Control Error: ", e)
 		}
+
+		return null
 	}
 
 	const getPlanoByPriceId = async (priceId: string): Promise<(Plano | null)> => {

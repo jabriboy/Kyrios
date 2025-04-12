@@ -30,6 +30,8 @@ export default function BarraLateral(props: {currentUser: User | null, handleCli
 
 	useEffect(() => {
 		setSelect(props.currentComponent)
+		// console.log(props.currentUser)
+		// console.log("desc: ", props.planoDesc)
 	}, [props.currentComponent])
 
 	return(

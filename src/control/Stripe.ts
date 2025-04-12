@@ -18,7 +18,7 @@ const StripeBackEnd = () => {
 		if (eventData.eventType === 'payment_intent.succeeded') {
 			const data = eventData.eventData
 			// console.log(`Pagamento bem-sucedido: ${JSON.stringify(data)}`);
-
+			
 			const userid = auth.currentUser?.uid
 			
 			await changeStatus(String(userid), "active")

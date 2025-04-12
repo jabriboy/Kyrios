@@ -108,7 +108,7 @@ export default function Home() {
 	return(
 		<>	
 			<div className="main">
-				<BarraLateral currentUser={currentUser} handleClick={(value: string) => {setCurrentComponent(value)}} currentComponent={currentComponent} planoDesc={plano && "desc" in plano ? plano.desc : null} setEmpresa={(value: string) => {setEmpresa(value)}}/>
+				<BarraLateral currentUser={currentUser} handleClick={(value: string) => {setCurrentComponent(value)}} currentComponent={currentComponent} planoDesc={plano ? plano.desc : null} setEmpresa={(value: string) => {setEmpresa(value)}}/>
 				<div className="right-box">
 					<BarraSuperior empresa={String(empresa)} currentUser={currentUser} planoDesc={plano && "desc" in plano ? plano.desc : null}/>
 
