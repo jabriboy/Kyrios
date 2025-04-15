@@ -3,7 +3,7 @@ import UserDB from "./UserDB";
 
 // Criando uma conexão SSE com o servidor
 const StripeBackEnd = () => {
-	const eventSource = new EventSource('https://sejakyrios.com.br:3000/stripeBackend/events');
+	const eventSource = new EventSource('http://sejakyrios.com.br:3000/stripeBackend/events');
 	
 	// Escutando os eventos enviados pelo backend
 	eventSource.onmessage = async function(event) {
