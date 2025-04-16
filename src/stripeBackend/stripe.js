@@ -1,25 +1,30 @@
-import dotenv from 'dotenv';
-dotenv.config();
+require('dotenv').config();
 
-import express from 'express';
-import Stripe from 'stripe';
+const fs = require('fs');
+const https = require('https');
+const express = require('express');
+const Stripe = require('stripe');
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const endpointSecret = process.env.STRIPE_WEBHOOK_KEY;
 
 const app = express();
 
+// Carregar certificados SSL
+const sslOptions = {
+  key: fs.readFileSync('/etc/letsencrypt/live/sejakyrios.com.br/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/sejakyrios.com.br/fullchain.pem'),
+};
+
 // Configuração de SSE (Server-Sent Events)
 let clients = [];
 
-// Função para enviar eventos ao frontend via SSE
 const sendEventToClients = (eventData) => {
   clients.forEach(client => {
     client.res.write(`data: ${JSON.stringify(eventData)}\n\n`);
   });
 };
 
-// Rota para receber conexões SSE do frontend
 app.get('/stripeBackend/events', (req, res) => {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
@@ -28,16 +33,14 @@ app.get('/stripeBackend/events', (req, res) => {
 
   clients.push({ res });
 
-  // Enviar uma mensagem inicial para o cliente
   res.write('data: {"message": "Conexão estabelecida"}\n\n');
 
-  // Remover o cliente quando a conexão for fechada
   req.on('close', () => {
     clients = clients.filter(client => client.res !== res);
   });
 });
 
-// Webhook da Stripe para receber eventos
+// Webhook da Stripe
 app.post('/stripeBackend/webhook', express.raw({ type: 'application/json' }), (request, response) => {
   let event = request.body;
 
@@ -52,45 +55,15 @@ app.post('/stripeBackend/webhook', express.raw({ type: 'application/json' }), (r
     }
   }
 
-  // Processar o evento e enviar para o frontend via SSE
   switch (event.type) {
     case 'payment_intent.succeeded':
-      const paymentIntent = event.data.object;
-      sendEventToClients({
-        eventType: event.type,
-        eventData: paymentIntent
-      });
-      break;
-
     case 'payment_method.attached':
-      const paymentMethod = event.data.object;
-      sendEventToClients({
-        eventType: event.type,
-        eventData: paymentMethod
-      });
-      break;
-
     case 'customer.subscription.deleted':
-      const subscription = event.data.object;
-      sendEventToClients({
-        eventType: event.type,
-        eventData: subscription
-      });
-      break;
-
     case 'invoice.payment_succeeded':
-      const invoice = event.data.object;
-      sendEventToClients({
-        eventType: event.type,
-        eventData: invoice
-      });
-      break;
-
     case 'customer.subscription.updated':
-      const updated = event.data.object;
       sendEventToClients({
         eventType: event.type,
-        eventData: updated
+        eventData: event.data.object
       });
       break;
 
@@ -99,13 +72,12 @@ app.post('/stripeBackend/webhook', express.raw({ type: 'application/json' }), (r
       break;
   }
 
-  // Retornar resposta 200 para confirmar recebimento
   response.status(200).send('Evento recebido');
 });
 
-// Iniciar o servidor
+// Iniciar servidor HTTPS
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+https.createServer(sslOptions, app).listen(PORT, () => {
+  console.log(`Servidor HTTPS rodando na porta ${PORT}`);
 });
