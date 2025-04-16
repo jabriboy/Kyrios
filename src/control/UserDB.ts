@@ -95,16 +95,16 @@ const UserDB = () => {
 	const checkUsername = async (username: string) => {
 		const q = query(collection(db, "User"), where("username", "==", `${username}`))
 		const querySnapshot = await getDocs(q)
-		// console.log(querySnapshot.docs)
-		if (querySnapshot.docs.length == 0) return true
+		console.log(querySnapshot.docs)
+		if (querySnapshot.empty) return true
 		else return false
 	}
 
 	const checkEmail = async (email: string) => {
 		const q = query(collection(db, "User"), where("email", "==", `${email}`))
 		const querySnapshot = await getDocs(q)
-		// console.log(querySnapshot.docs)
-		if (querySnapshot.docs.length == 0) return true
+		console.log(querySnapshot.docs)
+		if (querySnapshot.empty) return true
 		else return false
 	}
 	

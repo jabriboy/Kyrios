@@ -19,7 +19,7 @@ export default function SignUp(){
 	const { registerWithEmail } = AuthDB()
 
 	const onSubmit = async (data: FormData) => {
-		// console.log('Login Data:', data)
+		console.log('Login Data:', data)
 		await registerWithEmail(data.username, data.email, data.password)
 		navigate('/cadastroEmpresa')
 	}

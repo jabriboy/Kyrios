@@ -6,26 +6,23 @@ import UserDB from "./UserDB"
 const AuthDB = () => {
 
 	const registerWithEmail = async (username: string, email: string, password: string) => {
-		const { getPlanoId } = PlanoDB()
-		const { addUser, checkUsername, checkEmail } = UserDB()
+		const { addUser } = UserDB()
 		try {
-			const usernameAvailable = await checkUsername(username)
-			const emailAvailable = await checkEmail(email)
-			if(usernameAvailable && emailAvailable){
-				const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-				await addUser({
-					UserID: userCredential.user.uid,
-					StripeUserID: "",
-					IdPlano: String(await getPlanoId("premium free")),
-					username: username,
-					email: email,
-					status: ""
-				})
-				console.log("Usuário registrado:", userCredential.user);
-			}else{
-				throw new Error("O nome de usuário já existe ou email já cadastrado");
-			}
-	
+			console.log('entrou aqui')
+			console.log('entrou aqui 1')
+			console.log('entrou aqui 2')
+			const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+			console.log('entrou aqui 3')
+			await addUser({
+				UserID: userCredential.user.uid,
+				StripeUserID: "",
+				IdPlano: "",
+				username: username,
+				email: email,
+				status: "active"
+			})
+			console.log('entrou aqui 4')
+			console.log("Usuário registrado:", userCredential.user);
 		} catch (error: unknown) {
 			if(error instanceof Error){
 				console.error("Erro ao registrar:", error.message);
@@ -53,7 +50,6 @@ const AuthDB = () => {
 	const loginWithGoogle = async () => {
 		const provider = new GoogleAuthProvider();
 		const { addUser } = UserDB()
-		const { getPlanoId } = PlanoDB()
 		try {
 			const result = await signInWithPopup(auth, provider);
 			console.log("Usuário logado com Google:", result.user);
@@ -61,7 +57,7 @@ const AuthDB = () => {
 			await addUser({
 				UserID: result.user.uid,
 				StripeUserID: "",
-				IdPlano: String(await getPlanoId("premium free")),
+				IdPlano: "",
 				username: String(result.user.displayName),
 				email: String(result.user.email),
 				status: "active"
