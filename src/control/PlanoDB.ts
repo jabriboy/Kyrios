@@ -42,9 +42,9 @@ const PlanoDB = () => {
 	}
 
 	const getPlanoByPlanoId = async (planoId: string): Promise<Plano | null> => {
+		// console.log(planoId)
 		try{
-			const docRef = doc(db, "Plano", planoId);
-			const docSnap = await getDoc(docRef);
+			const docSnap = await getDoc(doc(db, "Plano", planoId));
 
 			if (docSnap.exists()) {
 				const plano = {

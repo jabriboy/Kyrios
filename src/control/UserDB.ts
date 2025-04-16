@@ -204,14 +204,17 @@ const UserDB = () => {
 		// console.log("priceId: ", priceid)
 		try{
 			const querySnapshot = await getDoc(doc(db, "User", id))
+			const q = query(collection(db, "Plano"), where("priceId", "==", `${priceid}`))
+			const plano = await getDocs(q)
 			
+			if(plano.empty) return null
 			const user = querySnapshot.data()
 			
 			// console.log(user)
 			
 			await updateDoc(doc(db, "User", id), {
 				StripeUserID: user?.StripeUserID,
-				IdPlano: priceid,
+				IdPlano: plano.docs[0].id,
 				username: user?.username,
 				email: user?.email,
 				status: user?.status,
