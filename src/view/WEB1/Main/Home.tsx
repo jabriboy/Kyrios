@@ -35,7 +35,7 @@ export default function Home() {
 
 	useEffect(() => {
 		// console.log(currentComponent)
-		const getData = async (user: User | null) => {
+		const getData = async (user: User | null, plano: Plano | null | false) => {
 			const allItems = await getLivoItemByUserId(String(user?.uid))
 			let transactions = 0
 			if(allItems){
@@ -44,7 +44,8 @@ export default function Home() {
 						transactions += 1
 					}
 				}
-				if(allItems) if(transactions >= 5) setBlock(true);
+				if(plano && (!plano.desc.includes("diamond") || !plano.desc.includes("premium"))) if(allItems) if(transactions >= 5) setBlock(true);
+				else setBlock(false)
 			}
 		}
 
@@ -61,8 +62,8 @@ export default function Home() {
 				navigate('/login')
 				return
 			}
-			await getData(user)
 			const plano = await getPlano(user); // Aguarda o retorno da função getPlano
+			await getData(user, plano)
 			
 			if (plano === false) {
 				// console.log("Plano não encontrado");

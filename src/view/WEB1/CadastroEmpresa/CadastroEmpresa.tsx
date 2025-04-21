@@ -6,6 +6,7 @@ import { User } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import './CadastroEmpresaStyle.css'
+import UserDB from "../../../control/UserDB";
 
 export default function CadastroEmpresa() {
 	interface Cadastro {desc: string, area: string}
@@ -14,6 +15,7 @@ export default function CadastroEmpresa() {
 	const [loading, setLoading] = useState(true);
 
 	const { addEmpresa } = EmpresaDB()
+	const { isNewUser } = UserDB()
 
 	const navigate = useNavigate();
 	const { register, handleSubmit, formState: { errors } } = useForm<Cadastro>();
@@ -38,11 +40,14 @@ export default function CadastroEmpresa() {
 			}
 			else{
 				setCurrentUser(user); // Atualiza o estado do usuário
-				setLoading(false)
+				const newUser = await isNewUser(user.uid)
+				if(newUser) setLoading(false)
+				else navigate('/')
 			}
 		});
 		// Cleanup do observer
 		return () => unsubscribe();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [navigate]);
 
 	if (loading) {return <Loading/>}

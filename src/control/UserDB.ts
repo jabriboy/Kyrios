@@ -5,6 +5,21 @@ import PlanoDB from './PlanoDB';
 
 const UserDB = () => {
 	
+	const isNewUser = async (userId: string) => {
+		try{
+			const q = query(collection(db, "Empresa"), where("IdUser", "==", `${userId}`))
+			const empresa = await getDocs(q)
+
+			if(empresa.empty) return true
+
+			return false
+			
+
+		}catch (e){
+			console.log("Error:", e)
+		}
+	}
+
 	const getUser = async (): Promise<{ id: string; u: User }[]> => {
 		try{
 			const querySnapshot = await getDocs(collection(db, "User"))
@@ -263,7 +278,8 @@ const UserDB = () => {
 		changePriceId,
 		getCusIDByUserID,
 		getPlanoByEmail,
-		getUserById
+		getUserById,
+		isNewUser
 	}
 
 }

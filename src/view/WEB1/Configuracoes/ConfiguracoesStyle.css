@@ -66,4 +66,24 @@
 .config .box .configuracoes .portal-do-cliente .portal-cliente:hover {
   transition: 0.5s;
   transform: scale(1.05, 1.05);
+}
+.config .box .configuracoes .logout {
+  margin-top: 2rem;
+}
+.config .box .configuracoes .logout button {
+  cursor: pointer;
+  display: block;
+  width: -moz-fit-content;
+  width: fit-content;
+  background-color: var(--dark-blue);
+  padding: 0.2rem 1rem;
+  color: var(--off-white);
+  text-decoration: none;
+  border-radius: 0.5rem;
+  border: none;
+  transition: transform 0.5s ease;
+}
+.config .box .configuracoes .logout button:hover {
+  transition: 0.5s;
+  transform: scale(1.05, 1.05);
 }/*# sourceMappingURL=ConfiguracoesStyle.css.map */

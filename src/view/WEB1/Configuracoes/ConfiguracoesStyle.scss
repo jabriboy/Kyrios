@@ -71,6 +71,26 @@
 					transform: scale(1.05, 1.05);
 				}
 			}
+			.logout{
+				margin-top: 2rem;
+				button{
+					cursor: pointer;
+					display: block;
+					width: fit-content;
+					background-color: var(--dark-blue);
+					padding: .2rem 1rem;
+					color: var(--off-white);
+					text-decoration: none;
+					border-radius: .5rem;
+					border: none;
+					transition: transform 0.5s ease;
+				}
+		
+				button:hover{
+					transition: .5s;
+					transform: scale(1.05, 1.05);
+				}
+			}
 		}
 	}
 }

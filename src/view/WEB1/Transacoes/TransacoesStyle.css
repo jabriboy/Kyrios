@@ -10,6 +10,12 @@
   align-items: center;
   justify-content: space-between;
 }
+.transacoes .box-transacoes .filtro {
+  display: flex;
+}
+.transacoes .box-transacoes .filtro p {
+  margin: 0;
+}
 .transacoes .box-transacoes .filtro select {
   cursor: pointer;
 }

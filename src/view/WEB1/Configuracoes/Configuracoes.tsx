@@ -6,9 +6,13 @@ import logo from '../../../assets/kyrios type.png'
 import { useNavigate } from "react-router-dom";
 import './ConfiguracoesStyle.css'
 import { User as User2 } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
+
 
 export default function Configuracoes(){
 	const { getUserById } = UserDB()
+	
+	const authUser = getAuth();
 
 	const [currentUser, setCurrentUser] = useState<User2 | null>(null)
 	const [user, setUser] = useState<User | undefined>(undefined);
@@ -58,6 +62,13 @@ export default function Configuracoes(){
 							} target="_blank"
 							rel="noopener noreferrer"
 							className="portal-cliente"> acesse aqui</a>
+						</div>
+						<div className="logout">
+							<h3>Desconectar da conta</h3>
+							<button onClick={() => {
+								signOut(authUser)
+								navigate('/login')
+							}}>Sair</button>
 						</div>
 					</div>
 				</div>

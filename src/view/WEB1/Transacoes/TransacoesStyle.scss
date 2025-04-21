@@ -9,6 +9,10 @@
 		align-items: center;
 		justify-content: space-between;
 		.filtro{
+			display: flex;
+			p{
+				margin: 0;
+			}
 			select{
 				cursor: pointer;
 			}

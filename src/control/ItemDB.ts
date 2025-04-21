@@ -135,6 +135,28 @@ const ItemDB = () => {
 
 		return newData || undefined
 	}
+
+	const queryItemsByMonthAndCategoria = async (livro: string, month: string, cat: string) => {
+		const data = await queryItemsByLivros(livro)
+
+		const newData = data?.filter((i) => {
+			if(i.i.IdCategoria == cat){
+				if(month == "0"){
+					return i
+				}
+				else if(month.length == 1){
+					month = "0"+month
+				}
+				if(i.i.month == month){
+					return {
+						i
+					}
+				}
+			}
+		})
+
+		return newData || undefined
+	}
 	  
 
 	const getItem = async (empresaId: string): Promise<{ id: string; i: Item }[][]> => {
@@ -302,7 +324,8 @@ const ItemDB = () => {
 		addManyByJson,
 		getLivoItemByUserId,
 		queryItemsByLivros,
-		queryItemsByMonth
+		queryItemsByMonth,
+		queryItemsByMonthAndCategoria
 	}
 
 }

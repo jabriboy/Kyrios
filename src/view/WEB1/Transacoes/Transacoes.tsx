@@ -17,7 +17,7 @@ import BancoDB from "../../../control/BancoDB"
 import EmpresaDB from "../../../control/EmpresaDB"
 
 export default function Transacoes(props: {currentUser: User | null, empresaId: string, block: boolean}){
-	const { queryItemsByMonth, updateItem, removeItem } = ItemDB()
+	const { queryItemsByMonth, updateItem, removeItem, queryItemsByMonthAndCategoria } = ItemDB()
 	const { getLivro } = LivroDB()
 	const { getCategoria, getCategoriaById } = CategoriaDB()
 	const { getTipoId } = TipoDB()
@@ -36,6 +36,7 @@ export default function Transacoes(props: {currentUser: User | null, empresaId: 
 	const [openModal, setOpenModal] = useState(false)
 	const [dadosModal, setDadosModal] = useState<null | { tipoValor: string; nomeBanco: string; catName: string; id: string; i: Item; }>(null)
 	const [categoria, setCategoria] = useState<{id: string, c: Categoria}[]>()
+	const [categoriaEscolhida, setCategoriaEscolhida] = useState<string>()
 	const [tipo, setTipo] = useState<string | null>(null)
 	const [checked, setChecked] = useState(true);
 	const [entrada, setEntrada] = useState<string | null>(null)
@@ -132,6 +133,13 @@ export default function Transacoes(props: {currentUser: User | null, empresaId: 
 		setData(await queryItemsByMonth(String(livroIdEscolhido), e))
 		setLoading(false)
 	}
+
+	const changeCategoria = async (e: string) => {
+		setLoading(true)
+		setCategoriaEscolhida(e)
+		setData(await queryItemsByMonthAndCategoria(String(livroIdEscolhido), mes, e))
+		setLoading(false)
+	}
 	
 	const updateData = async () => {
 		setLoading(true)
@@ -209,26 +217,46 @@ export default function Transacoes(props: {currentUser: User | null, empresaId: 
 			}}>
 				<div className="box-transacoes">
 					<div className="filtro">
-						<select
-							value={livroIdEscolhido}
-							onChange={(event) => {
-								changeLivro(event.target.value)
-							}}
-						>
-							{livros?.map((l, index) => {
-								return <option key={index} value={l.id}>{l.l.desc}</option>
-							})}
-						</select>
-						<select
-							value={mes}
-							onChange={(event) => {
-								changeMes(event.target.value)
-							}}
-						>
-							{meses?.map((m, index) => {
-								return <option key={index} value={index}>{m}</option>
-							})}
-						</select>
+						<div className="filtro-livro">
+							<p>livro</p>
+							<select
+								value={livroIdEscolhido}
+								onChange={(event) => {
+									changeLivro(event.target.value)
+								}}
+							>
+								{livros?.map((l, index) => {
+									return <option key={index} value={l.id}>{l.l.desc}</option>
+								})}
+							</select>
+						</div>
+						<div className="filtro-mes">
+							<p>Mês</p>
+							<select
+								value={mes}
+								onChange={(event) => {
+									changeMes(event.target.value)
+								}}
+							>
+								{meses?.map((m, index) => {
+									return <option key={index} value={index}>{m}</option>
+								})}
+							</select>
+						</div>
+						<div className="filtro-categoria">
+							<p>Categoria</p>
+							<select
+								value={categoriaEscolhida}
+								onChange={(event) => {
+									changeCategoria(event.target.value)
+								}}
+							>
+								<option value={""}></option>
+								{categoria?.map((m, index) => {
+									return <option key={index} value={m.id}>{m.c.desc}</option>
+								})}
+							</select>
+						</div>
 					</div>
 					<h2>Transações</h2>
 					<button className="extrato" onClick={handleClick}>baixar extrato</button>
