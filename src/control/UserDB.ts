@@ -101,7 +101,8 @@ const UserDB = () => {
 		})
 
 		if(user[0].u.status == 'deactive') return false
-		// console.log(user[0].u.IdPlano)
+
+		// console.log("Plano Id User => ", user[0].u.IdPlano)
 		const plano = await getPlanoByPlanoId(user[0].u.IdPlano)
 
 		return plano

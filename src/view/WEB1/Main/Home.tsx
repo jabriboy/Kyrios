@@ -63,6 +63,7 @@ export default function Home() {
 				return
 			}
 			const plano = await getPlano(user); // Aguarda o retorno da função getPlano
+			// console.log(plano)
 			await getData(user, plano)
 			
 			if (plano === false) {
@@ -90,13 +91,13 @@ export default function Home() {
 			case 'página inicial':
 				return <PaginaInicial currentUser={currentUser} handleClick={(value: string) => {setCurrentComponent(value)}}/>
 			case 'cadastrar transação':
-				return <Cadastro handleClick={(value: string) => {setCurrentComponent(value)}} currentUser={currentUser} empresaId={String(empresa)} planoDesc={plano && "desc" in plano ? plano.desc : null} setCurrentComponent={(value: string) => {setCurrentComponent(value)}} block={block}/>
+				return <Cadastro handleClick={(value: string) => {setCurrentComponent(value)}} currentUser={currentUser} empresaId={String(empresa)} planoDesc={plano ? plano.desc : null} setCurrentComponent={(value: string) => {setCurrentComponent(value)}} block={block}/>
 			case 'cadastrar banco':
-				return <CadastroBanco setCurrentComponent={(value: string) => {setCurrentComponent(value)}} handleClick={(value: string) => {setCurrentComponent(value)}} loading={null} currentUser={currentUser} planoDesc={plano && "desc" in plano ? plano.desc : null} empresa={String(empresa)}/>
+				return <CadastroBanco setCurrentComponent={(value: string) => {setCurrentComponent(value)}} handleClick={(value: string) => {setCurrentComponent(value)}} loading={null} currentUser={currentUser} planoDesc={plano ? plano.desc : null} empresa={String(empresa)}/>
 			case 'transações':
 				return <Transacoes currentUser={currentUser} empresaId={String(empresa)} block={block}/>
 			case 'criar livro caixa':
-				return <CadastroLivro setCurrentComponent={(value: string) => {setCurrentComponent(value)}} handleClick={(value: string) => {setCurrentComponent(value)}} empresaId={String(empresa)} currentUser={currentUser} planoDesc={plano && "desc" in plano ? plano.desc : null}/>
+				return <CadastroLivro setCurrentComponent={(value: string) => {setCurrentComponent(value)}} handleClick={(value: string) => {setCurrentComponent(value)}} empresaId={String(empresa)} currentUser={currentUser} planoDesc={plano ? plano.desc : null}/>
 			case 'cadastrar categoria':
 				return <CadastroCategoria currentUser={currentUser}/>
 
@@ -111,7 +112,7 @@ export default function Home() {
 			<div className="main">
 				<BarraLateral currentUser={currentUser} handleClick={(value: string) => {setCurrentComponent(value)}} currentComponent={currentComponent} planoDesc={plano ? plano.desc : null} setEmpresa={(value: string) => {setEmpresa(value)}}/>
 				<div className="right-box">
-					<BarraSuperior empresa={String(empresa)} currentUser={currentUser} planoDesc={plano && "desc" in plano ? plano.desc : null}/>
+					<BarraSuperior empresa={String(empresa)} currentUser={currentUser} planoDesc={plano ? plano.desc : null}/>
 
 					<div className="render-components">
 						{renderComponent()}
